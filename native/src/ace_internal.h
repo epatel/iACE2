@@ -21,6 +21,10 @@
 #define ACE_CHARSET_RAM 0x2c00
 #define ACE_TSTATES_PER_FRAME 65000UL
 
+/* ROM loop where the input line waits for a key: BIT 5,(3C28h) / JR Z,-4 */
+#define ACE_KEY_WAIT_START 0x059b
+#define ACE_KEY_WAIT_END 0x059e
+
 #define ACE_MAX_BEEPER_EVENTS 4096
 
 /* Z80 registers, as in xz80. */
@@ -47,6 +51,7 @@ struct ace_machine {
     z80_regs cpu;
     unsigned long tstates;
     int interrupted;
+    unsigned short irq_pc; /* pc when the last interrupt was taken */
 
     unsigned char keyboard_ports[8];
 
@@ -55,6 +60,7 @@ struct ace_machine {
     size_t spool_pos;
     int spool_held_key;
     int spool_scans_left;
+    int spool_blocked_scans;
 
     /* Video */
     uint8_t framebuffer[ACE_SCREEN_WIDTH * ACE_SCREEN_HEIGHT * 4];

@@ -324,6 +324,22 @@ static void test_tape_malformed_is_treated_as_missing(void)
     ace_destroy(m);
 }
 
+/* Lines after a LOAD must wait until the ROM is back at the input line (iACE 1.x lost them). */
+static void test_spool_waits_for_input_line(void)
+{
+    int failures_before = failures;
+    size_t len;
+    uint8_t *frogger = read_file("../../assets/tapes/frogger.dic", &len);
+    tape_deck deck = {.tape = frogger, .tape_len = len};
+    ace_machine *m = boot();
+    type(m, "LOAD frogger\n1 2 + .\n", &deck);
+    CHECK(screen_contains(m, "1 2 + . 3  OK"));
+    if (failures != failures_before)
+        dump_screen(m);
+    ace_destroy(m);
+    free(frogger);
+}
+
 static void test_frogger_tape_loads(void)
 {
     int failures_before = failures;
@@ -377,6 +393,7 @@ int main(void)
     test_tape_save_and_load();
     test_tape_missing_loads_stub();
     test_tape_malformed_is_treated_as_missing();
+    test_spool_waits_for_input_line();
     test_frogger_tape_loads();
     test_beeper_events();
 

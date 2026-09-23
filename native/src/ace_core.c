@@ -108,6 +108,7 @@ void ace_spool_cancel(ace_machine *m)
         ace_key_release_all(m);
     m->spool_held_key = 0;
     m->spool_scans_left = 0;
+    m->spool_blocked_scans = 0;
 }
 
 int ace_spool_active(ace_machine *m)
@@ -115,8 +116,21 @@ int ace_spool_active(ace_machine *m)
     return m && (m->spool || m->spool_held_key);
 }
 
+/* Scans to wait for the ROM to get back to the input line before typing anyway, so a
+ * program that never returns to the prompt cannot stall the spooler (about 5 s). */
+#define SPOOL_MAX_BLOCKED_SCANS 250
+
+/* True while the ROM's input line is waiting for a key. The keyboard is scanned by the
+ * interrupt routine, so what matters is where the main program was interrupted. Keys
+ * typed while a command is still running would be mangled (e.g. after LOAD). */
+static int input_line_waiting(ace_machine *m)
+{
+    return m->irq_pc >= ACE_KEY_WAIT_START && m->irq_pc <= ACE_KEY_WAIT_END;
+}
+
 /* Called on every keyboard scan. Presses one key, holds it for a few scans of the second
- * half-row, releases it, and waits a little longer after Enter. */
+ * half-row, releases it, and waits a little longer after Enter. A new key is only pressed
+ * when the input line is waiting for one. */
 static void spooler_scan(ace_machine *m, int h)
 {
     if (h == 0xfe && !m->spool_scans_left) {
@@ -125,7 +139,11 @@ static void spooler_scan(ace_machine *m, int h)
             if (m->spool_held_key == '\n')
                 m->spool_scans_left = 4;
             m->spool_held_key = 0;
+        } else if (m->spool && !input_line_waiting(m) &&
+                   m->spool_blocked_scans < SPOOL_MAX_BLOCKED_SCANS) {
+            m->spool_blocked_scans++;
         } else if (m->spool) {
+            m->spool_blocked_scans = 0;
             int ch = (unsigned char)m->spool[m->spool_pos++];
             if (!m->spool[m->spool_pos]) {
                 free(m->spool);
@@ -407,13 +425,13 @@ size_t ace_tape_saved(ace_machine *m, char *name_out, size_t name_cap, int *kind
  *   "ACE2SNAP", u16 version, u16 reserved,
  *   u8 a f b c d e h l r a1 f1 b1 c1 d1 e1 h1 l1 i iff1 iff2 im,
  *   u16 pc ix iy sp, u32 radjust, u8 ixoriy new_ixoriy intsample op,
- *   u32 tstates, u8 interrupted, u8 keyboard_ports[8], u8 beeper_level,
+ *   u32 tstates, u8 interrupted, u16 irq_pc, u8 keyboard_ports[8], u8 beeper_level,
  *   u8 mem[65536]
  * Add new versions by appending fields; keep the reader for every older version. */
 
 static const char snapshot_magic[8] = {'A', 'C', 'E', '2', 'S', 'N', 'A', 'P'};
 #define SNAPSHOT_VERSION 1
-#define SNAPSHOT_V1_SIZE (8 + 2 + 2 + 21 + 8 + 4 + 4 + 4 + 1 + 8 + 1 + 65536)
+#define SNAPSHOT_V1_SIZE (8 + 2 + 2 + 21 + 8 + 4 + 4 + 4 + 1 + 2 + 8 + 1 + 65536)
 
 typedef struct {
     uint8_t *p;
@@ -461,6 +479,7 @@ size_t ace_snapshot_save(ace_machine *m, uint8_t *out, size_t cap)
     put8(&c, r->op);
     put32(&c, m->tstates);
     put8(&c, (unsigned)m->interrupted);
+    put16(&c, m->irq_pc);
     for (int n = 0; n < 8; n++)
         put8(&c, m->keyboard_ports[n]);
     put8(&c, (unsigned)m->beeper_level);
@@ -504,6 +523,7 @@ int ace_snapshot_load(ace_machine *m, const uint8_t *in, size_t len)
     m->cpu = r;
     m->tstates = get32(&c);
     m->interrupted = (int)get8(&c);
+    m->irq_pc = (unsigned short)get16(&c);
     for (int n = 0; n < 8; n++)
         m->keyboard_ports[n] = (unsigned char)get8(&c);
     m->beeper_level = (int)get8(&c);

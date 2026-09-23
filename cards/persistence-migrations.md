@@ -15,7 +15,7 @@ Every persisted format is versioned and has a tested upgrade path from every ear
 - Tables: `tapes` (name, kind `dic|byt`, data BLOB, source `seed|user|import|legacy`, timestamps), `settings` (key/value), `snapshots` (slot, format_version, data BLOB).
 
 ## Snapshot binary
-- Layout: `"ACE2SNAP"` magic, then `u16 version`, then little-endian fields (registers one by one, then 64K RAM, then keyboard and spooler state).
+- Layout: `"ACE2SNAP"` magic, then `u16 version`, then little-endian fields: registers one by one, T-states, the interrupt state and pc, the keyboard ports, the beeper level, then 64K RAM. The exact layout is in the comment above `ace_snapshot_save` in `native/src/ace_core.c`. The spooler and tape transfers are not saved.
 - `ace_snapshot_load` in C upgrades older versions. Each version needs a C test fixture in `native/test/fixtures/`.
 - If a snapshot is unknown or corrupt, do a cold boot. Never crash.
 

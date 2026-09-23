@@ -31,7 +31,7 @@ Clock 3.25 MHz, frame 50 Hz → 65000 T-states per frame. When `tstates > 65000`
 ## I/O port 0xFE
 - `in(h=row, l=0xFE)` returns the keyboard half-row. `h` is one of `FE FD FB F7 EF DF BF 7F` → `keyboard_ports[0..7]`. Active low.
 - The beeper: `IN 0xFE` pulls the speaker to level 0 and `OUT 0xFE` pushes it to level 1. Each level change is recorded as `(tstate << 1) | level`, readable with `ace_beeper_events` until the next frame. (iACE 1.x turned the period between OUTs into a sine wave instead.)
-- The spooler is driven from `in(0xFEFE)` scans. It presses one char, then releases it on the next scan, and waits 4 more `0xFDFE` scans after a newline.
+- The spooler is driven from `in(0xFEFE)` scans. It presses one char, then releases it on the next scan, and waits 4 more `0xFDFE` scans after a newline. It only presses a **new** key when the input line is waiting for one: the interrupted pc (`irq_pc`) must be in the ROM's key-wait loop `0x059B–0x059E` (`BIT 5,(3C28h) / JR Z`). If a program never returns to the prompt, it types anyway after 250 blocked scans (about 5 s). Without this gate, lines typed after a slow command such as `LOAD` got mangled (`VLIST` became `?IST`), which is an iACE 1.x bug.
 
 ## ROM patches (tape)
 - `0x18A7: ED FC C9` → `load_p(de, hl)`

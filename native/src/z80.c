@@ -125,6 +125,7 @@ void z80_run_frame(ace_machine *m)
         }
 
         if (m->interrupted && intsample && iff1) {
+            m->irq_pc = pc;
             push2(pc);
             pc = 0x38;
             m->interrupted = 0;

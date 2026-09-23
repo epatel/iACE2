@@ -197,7 +197,7 @@ Each phase ends with a check that can be verified.
 | 0 ✅ | **Scaffold** | `flutter create` (iOS + Android, `com.memention`), Makefile, CLAUDE.md + cards, `git init`, analysis_options, CI-ready `make test` | `make setup && make test` is green on an empty app |
 | 1 ✅ | **C core extraction** | `ace_core.c` + refactored Z80 (frame-stepped, no ObjC, no globals), `ace_api.h`, host build, C tests | Headless test: boot ROM 100 frames; spool `2 2 + .\n` → screen contains `4  OK`. Also: every key, SAVE/LOAD round trip, missing and malformed tapes, Frogger, snapshots, beeper (62 checks, UBSan clean) |
 | 2 ✅ | **FFI bridge** | build hook, ffigen bindings, `AceMachine` wrapper, `flutter test` loading the host lib | The same boot test passes from Dart: 10 host tests, plus an integration test on the iPad simulator and an Android emulator |
-| 3 | **Screen and loop** | `EmulatorController` (Ticker, 50 Hz accumulator, pause on background), `ScreenView` | The app shows the live ACE prompt on an iPad sim and Android tablet emulator |
+| 3 ✅ | **Screen and loop** | `EmulatorController` (Ticker, 50 Hz accumulator, pause on background), `ScreenView`, in-memory `TapeLibrary` seeded with Frogger | The app shows the live ACE prompt on an iPad sim and Android tablet emulator. Verified on the iPad Pro 13" simulator and a Pixel Tablet API 35 emulator by typing through the VM service; Frogger runs |
 | 4 | **Keyboard** | `tool/` xib → `keyboard_map.json`, photo keyboard with hit regions, sticky shift | You can type FORTH on screen; the key matrix is tested per key |
 | 5 | **Persistence** | drift DB v1 + schema dump + migration tests, settings, tapes (SAVE/LOAD via ED FC/FD), Frogger seed, snapshot auto-save/restore | `SAVE`/`LOAD` round-trip; `LOAD frogger` plays; kill and relaunch restores the session |
 | 6 | **Audio** | beeper edge log + miniaudio output, volume setting, audio-session handling (interruptions, silent switch policy) | `BEEP` in FORTH is audible on both platforms with no clicks or pops |
@@ -214,6 +214,7 @@ Phases 1–2 carry the most risk and should be done first. Phases 4, 6 and 7 are
 - **Timing:** the original paced frames with `sleep`. Under a Ticker, frames must be caught up without spiralling (cap at about 3 frames per tick). Audio timing comes from T-states, not wall-clock time.
 - **Audio latency / Android:** miniaudio + AAudio is fine. The original's sine synthesis is replaced by a band-limited square wave, which is closer to the real beeper.
 - **Annotation coordinates:** the original rects are in 768-pt page-view space. The conversion needs the page render size used then, so normalise to 0..1 of the page rect and check a sample by eye.
+- **Orientation can't be forced on tablets:** the app targets Android SDK 36, and on large screens (smallest width ≥ 600 dp) Android 16 ignores `screenOrientation`. The Pixel Tablet emulator already does this on API 35 (`ignoreOrientationRequest=true`), so the app shows in landscape there. iPadOS 26 also allows freely resized windows. The portrait design therefore needs a landscape fallback (see decision 6).
 - **Existing bug in the original:** `save_state()` stores `savedG`, which is only refreshed at frame end. The new snapshot is taken between frames, so this goes away.
 
 ## 9. Decisions (2026-09-24)
@@ -223,3 +224,4 @@ Phases 1–2 carry the most risk and should be done first. Phases 4, 6 and 7 are
 3. **State management:** plain `provider` + `ChangeNotifier`.
 4. **Agentic patterns:** confirmed as in §6.
 5. **v1 extras:** `.TAP` import/export only. Hardware keyboard and raw `.dic`/`.byt` exchange are deferred.
+6. **Landscape fallback (decided 2026-09-24):** Android 16 tablets and iPadOS 26 windows can't be locked to portrait. Keep the portrait design and, when the window is wider than it is tall, show it centred at portrait proportions with black side bars. This does not add a separate landscape layout.
