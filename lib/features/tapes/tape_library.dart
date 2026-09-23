@@ -10,9 +10,7 @@ abstract interface class TapeLibrary {
   Future<void> save(String name, TapeKind kind, Uint8List data);
 }
 
-/// Keeps tapes in memory, seeded with the bundled Frogger tape.
-///
-/// Used until the database-backed library arrives (Phase 5).
+/// Keeps tapes in memory. Used by tests; the app uses DbTapeLibrary.
 class InMemoryTapeLibrary implements TapeLibrary {
   InMemoryTapeLibrary([Map<String, Uint8List>? tapes]) : _tapes = {...?tapes};
 

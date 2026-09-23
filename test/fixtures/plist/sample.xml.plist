@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>big</key>
+	<integer>1099511627776</integer>
+	<key>blob</key>
+	<data>
+	AAH/
+	</data>
+	<key>count</key>
+	<integer>42</integer>
+	<key>list</key>
+	<array>
+		<integer>1</integer>
+		<string>two</string>
+		<array>
+			<integer>3</integer>
+		</array>
+	</array>
+	<key>name</key>
+	<string>ACE</string>
+	<key>negative</key>
+	<integer>-5</integer>
+	<key>nested</key>
+	<dict>
+		<key>a</key>
+		<integer>1</integer>
+	</dict>
+	<key>off</key>
+	<false/>
+	<key>on</key>
+	<true/>
+	<key>ratio</key>
+	<real>1.5</real>
+	<key>unicode</key>
+	<string>Jüpiter © ACE</string>
+</dict>
+</plist>
