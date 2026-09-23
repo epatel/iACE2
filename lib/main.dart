@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 
 import 'core/ffi/ace_machine.dart';
 import 'features/emulator/emulator_controller.dart';
-import 'features/emulator/screen_view.dart';
+import 'features/keyboard/keyboard_controller.dart';
+import 'features/keyboard/keyboard_map.dart';
+import 'features/shell/home_page.dart';
 import 'features/tapes/tape_library.dart';
 
 Future<void> main() async {
@@ -15,32 +17,38 @@ Future<void> main() async {
   ]);
   final rom = await rootBundle.load('assets/ace.rom');
   final tapes = await InMemoryTapeLibrary.withBundledTapes(rootBundle);
+  final keyboardMap = await KeyboardMap.load(rootBundle);
   final controller = EmulatorController(
     machine: AceMachine(rom.buffer.asUint8List()),
     tapes: tapes,
   )..start();
-  runApp(IaceApp(controller: controller));
+  runApp(IaceApp(controller: controller, keyboardMap: keyboardMap));
 }
 
 class IaceApp extends StatelessWidget {
-  const IaceApp({super.key, required this.controller});
+  const IaceApp({
+    super.key,
+    required this.controller,
+    required this.keyboardMap,
+  });
 
   final EmulatorController controller;
+  final KeyboardMap keyboardMap;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: controller,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: controller),
+        ChangeNotifierProvider(
+          create: (_) => KeyboardController(emulator: controller),
+        ),
+      ],
       child: MaterialApp(
         title: 'iACE',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: const Scaffold(
-          backgroundColor: Colors.black,
-          body: SafeArea(
-            child: Align(alignment: Alignment.topCenter, child: ScreenView()),
-          ),
-        ),
+        home: HomePage(keyboardMap: keyboardMap),
       ),
     );
   }

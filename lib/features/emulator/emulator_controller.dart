@@ -33,6 +33,7 @@ class EmulatorController extends ChangeNotifier {
   bool _wantsRunning = false;
   bool _disposed = false;
   int _frameCount = 0;
+  final List<VoidCallback> _frameListeners = [];
 
   /// The latest screen image, [AceMachine.width] x [AceMachine.height].
   ValueListenable<ui.Image?> get screen => _screen;
@@ -41,6 +42,12 @@ class EmulatorController extends ChangeNotifier {
   int get frameCount => _frameCount;
 
   bool get isRunning => _ticker.isActive;
+
+  /// Calls [listener] after every emulator frame.
+  void addFrameListener(VoidCallback listener) => _frameListeners.add(listener);
+
+  void removeFrameListener(VoidCallback listener) =>
+      _frameListeners.remove(listener);
 
   void start() {
     _wantsRunning = true;
@@ -82,6 +89,9 @@ class EmulatorController extends ChangeNotifier {
     if (flags & FrameFlags.tapeLoad != 0) _loadTape();
     if (flags & FrameFlags.tapeSaved != 0) _saveTape();
     if (flags & FrameFlags.screenDirty != 0) _updateScreen();
+    for (final listener in List.of(_frameListeners)) {
+      listener();
+    }
   }
 
   void _loadTape() {

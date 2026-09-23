@@ -64,6 +64,8 @@ flutter:
   assets:
     - assets/ace.rom
     - assets/tapes/
+    - assets/images/
+    - assets/keyboard_map.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

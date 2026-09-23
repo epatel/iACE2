@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -6,10 +7,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:iace/core/ffi/ace_machine.dart';
 import 'package:iace/features/emulator/emulator_controller.dart';
 import 'package:iace/features/emulator/screen_view.dart';
+import 'package:iace/features/keyboard/keyboard_map.dart';
 import 'package:iace/features/tapes/tape_library.dart';
 import 'package:iace/main.dart';
 
 final rom = File('assets/ace.rom').readAsBytesSync();
+final keyboardMap = KeyboardMap.fromJson(
+  jsonDecode(File('assets/keyboard_map.json').readAsStringSync())
+      as Map<String, dynamic>,
+);
 
 EmulatorController newController([TapeLibrary? tapes]) => EmulatorController(
   machine: AceMachine(rom),
@@ -32,7 +38,9 @@ void main() {
     tester,
   ) async {
     final controller = newController()..start();
-    await tester.pumpWidget(IaceApp(controller: controller));
+    await tester.pumpWidget(
+      IaceApp(controller: controller, keyboardMap: keyboardMap),
+    );
     expect(find.byType(ScreenView), findsOneWidget);
 
     for (var i = 0; i < 120; i++) {
@@ -55,7 +63,9 @@ void main() {
 
   testWidgets('pauses while the app is hidden', (tester) async {
     final controller = newController()..start();
-    await tester.pumpWidget(IaceApp(controller: controller));
+    await tester.pumpWidget(
+      IaceApp(controller: controller, keyboardMap: keyboardMap),
+    );
     await tester.pump(const Duration(milliseconds: 100));
     expect(controller.isRunning, isTrue);
 

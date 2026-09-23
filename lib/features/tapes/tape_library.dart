@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 
 import '../../core/ffi/ace_machine.dart';
