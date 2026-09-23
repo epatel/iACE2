@@ -55,6 +55,8 @@ flowchart TB
 
 ### 2.1 C core API (sketch)
 
+The implemented API is `native/include/ace_api.h` (Phase 1). It differs from this sketch in the tape calls, which are `ace_tape_request` / `ace_tape_supply` / `ace_tape_saved`, and it adds `ace_beeper_events`. The audio calls come in Phase 6.
+
 ```c
 // native/include/ace_api.h — the only header ffigen sees
 typedef struct ace_machine ace_machine;          // opaque; no globals exposed
@@ -193,7 +195,7 @@ Each phase ends with a check that can be verified.
 | # | Phase | Deliverables | Done when |
 |---|---|---|---|
 | 0 ✅ | **Scaffold** | `flutter create` (iOS + Android, `com.memention`), Makefile, CLAUDE.md + cards, `git init`, analysis_options, CI-ready `make test` | `make setup && make test` is green on an empty app |
-| 1 | **C core extraction** | `ace_core.c` + refactored Z80 (frame-stepped, no ObjC), `ace_api.h`, host build, C tests | Headless test: boot ROM 100 frames, video RAM shows the copyright banner; spool `2 2 + .\n` → screen contains `4 OK` |
+| 1 ✅ | **C core extraction** | `ace_core.c` + refactored Z80 (frame-stepped, no ObjC, no globals), `ace_api.h`, host build, C tests | Headless test: boot ROM 100 frames; spool `2 2 + .\n` → screen contains `4  OK`. Also: every key, SAVE/LOAD round trip, missing and malformed tapes, Frogger, snapshots, beeper (62 checks, UBSan clean) |
 | 2 | **FFI bridge** | build hook, ffigen bindings, `AceMachine` wrapper, `flutter test` loading the host lib | The same boot test passes from Dart |
 | 3 | **Screen and loop** | `EmulatorController` (Ticker, 50 Hz accumulator, pause on background), `ScreenView` | The app shows the live ACE prompt on an iPad sim and Android tablet emulator |
 | 4 | **Keyboard** | `tool/` xib → `keyboard_map.json`, photo keyboard with hit regions, sticky shift | You can type FORTH on screen; the key matrix is tested per key |

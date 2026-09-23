@@ -16,7 +16,7 @@ TEST_SOURCES := $(wildcard $(NATIVE_TEST)/*.c)
 C_FORMAT_FILES := $(wildcard $(NATIVE_SRC)/ace_*.c $(NATIVE_SRC)/audio.c $(NATIVE_SRC)/keyboard.c $(NATIVE_INC)/*.h $(NATIVE_TEST)/*.c)
 
 .DEFAULT_GOAL := help
-.PHONY: help setup gen ffigen drift core core-test test flutter-test analyze format \
+.PHONY: help setup gen ffigen drift core core-test core-test-ubsan test flutter-test analyze format \
         run-ios run-android build-ios build-android assets db-schema-dump db-migration-test clean
 
 help: ## List targets
@@ -50,6 +50,9 @@ core-test: ## Build and run the C unit tests on the host
 	  (cd $(NATIVE_TEST) && ../../$(BUILD_DIR)/$$n) || exit 1; \
 	done; \
 	else echo "core-test: no C tests yet (Phase 1)"; fi
+
+core-test-ubsan: ## Run the C unit tests with UndefinedBehaviorSanitizer (ASan hangs on this macOS setup)
+	$(MAKE) core-test CFLAGS="-std=c11 -O1 -g -Wall -Wextra -fsanitize=undefined -fno-sanitize-recover=undefined"
 
 flutter-test: ## Run Dart/Flutter tests (unit, widget, migrations)
 	$(FLUTTER) test
