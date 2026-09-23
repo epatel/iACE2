@@ -196,7 +196,7 @@ Each phase ends with a check that can be verified.
 |---|---|---|---|
 | 0 ✅ | **Scaffold** | `flutter create` (iOS + Android, `com.memention`), Makefile, CLAUDE.md + cards, `git init`, analysis_options, CI-ready `make test` | `make setup && make test` is green on an empty app |
 | 1 ✅ | **C core extraction** | `ace_core.c` + refactored Z80 (frame-stepped, no ObjC, no globals), `ace_api.h`, host build, C tests | Headless test: boot ROM 100 frames; spool `2 2 + .\n` → screen contains `4  OK`. Also: every key, SAVE/LOAD round trip, missing and malformed tapes, Frogger, snapshots, beeper (62 checks, UBSan clean) |
-| 2 | **FFI bridge** | build hook, ffigen bindings, `AceMachine` wrapper, `flutter test` loading the host lib | The same boot test passes from Dart |
+| 2 ✅ | **FFI bridge** | build hook, ffigen bindings, `AceMachine` wrapper, `flutter test` loading the host lib | The same boot test passes from Dart: 10 host tests, plus an integration test on the iPad simulator and an Android emulator |
 | 3 | **Screen and loop** | `EmulatorController` (Ticker, 50 Hz accumulator, pause on background), `ScreenView` | The app shows the live ACE prompt on an iPad sim and Android tablet emulator |
 | 4 | **Keyboard** | `tool/` xib → `keyboard_map.json`, photo keyboard with hit regions, sticky shift | You can type FORTH on screen; the key matrix is tested per key |
 | 5 | **Persistence** | drift DB v1 + schema dump + migration tests, settings, tapes (SAVE/LOAD via ED FC/FD), Frogger seed, snapshot auto-save/restore | `SAVE`/`LOAD` round-trip; `LOAD frogger` plays; kill and relaunch restores the session |

@@ -16,7 +16,7 @@ TEST_SOURCES := $(wildcard $(NATIVE_TEST)/*.c)
 C_FORMAT_FILES := $(wildcard $(NATIVE_SRC)/ace_*.c $(NATIVE_SRC)/audio.c $(NATIVE_SRC)/keyboard.c $(NATIVE_INC)/*.h $(NATIVE_TEST)/*.c)
 
 .DEFAULT_GOAL := help
-.PHONY: help setup gen ffigen drift core core-test core-test-ubsan test flutter-test analyze format \
+.PHONY: help setup gen ffigen drift core core-test core-test-ubsan test flutter-test integration-test analyze format \
         run-ios run-android build-ios build-android assets db-schema-dump db-migration-test clean
 
 help: ## List targets
@@ -30,8 +30,7 @@ setup: ## Fetch packages and check the toolchain
 gen: ffigen drift ## Run all code generators
 
 ffigen: ## Generate Dart FFI bindings from native/include/ace_api.h
-	@if [ -f ffigen.yaml ]; then $(DART) run ffigen --config ffigen.yaml; \
-	else echo "ffigen: no ffigen.yaml yet (Phase 2)"; fi
+	$(DART) run tool/ffigen.dart
 
 drift: ## Generate drift database code
 	@if grep -q '^  drift:' pubspec.yaml; then $(DART) run build_runner build --delete-conflicting-outputs; \
@@ -59,11 +58,15 @@ flutter-test: ## Run Dart/Flutter tests (unit, widget, migrations)
 
 test: core-test flutter-test ## Run all tests
 
+integration-test: ## Run integration tests on a device or simulator (DEVICE=<id>, see `flutter devices`)
+	@if [ -z "$(DEVICE)" ]; then echo "Set DEVICE=<id> (see: flutter devices)"; exit 1; fi
+	$(FLUTTER) test integration_test -d "$(DEVICE)"
+
 analyze: ## Static analysis
 	$(FLUTTER) analyze
 
 format: ## Format Dart and (non-vendored) C code
-	$(DART) format lib test $(wildcard tool hook)
+	$(DART) format lib test $(wildcard integration_test tool hook)
 	@if [ -n "$(C_FORMAT_FILES)" ] && command -v clang-format >/dev/null; then clang-format -i $(C_FORMAT_FILES); fi
 
 run-ios: ## Run on an iPad (device or simulator)
