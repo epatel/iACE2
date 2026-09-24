@@ -263,6 +263,16 @@ class AceMachine implements Finalizable {
   void poke(int address, int value) =>
       native.ace_poke(_m, address & 0xffff, value & 0xff);
 
+  /// Opens the audio device and plays the beeper. Returns false if no audio
+  /// device could be opened (the machine keeps running silently).
+  bool startAudio() => native.ace_audio_start(_m) != 0;
+
+  void stopAudio() => native.ace_audio_stop(_m);
+
+  /// Beeper volume, 0..1.
+  set volume(double value) =>
+      native.ace_audio_set_volume(_m, value.clamp(0.0, 1.0));
+
   /// Speaker level changes during the last frame, as `(tstate << 1) | level`.
   Uint32List beeperEvents() {
     return using((arena) {

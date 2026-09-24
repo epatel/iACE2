@@ -46,9 +46,12 @@ Future<void> main() async {
 
   final rom = await rootBundle.load('assets/ace.rom');
   final keyboardMap = await KeyboardMap.load(rootBundle);
+  final machine = AceMachine(rom.buffer.asUint8List())
+    ..volume = await settings.getDouble(SettingsRepository.volume) ?? 1.0;
   final controller = EmulatorController(
-    machine: AceMachine(rom.buffer.asUint8List()),
+    machine: machine,
     tapes: tapes,
+    playSound: true,
   );
   final autosave = SessionAutosave(
     controller: controller,

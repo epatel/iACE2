@@ -12,8 +12,13 @@ NATIVE_TEST  := native/test
 BUILD_DIR    := build/native
 
 CORE_SOURCES := $(filter-out $(NATIVE_SRC)/z80ops.c $(NATIVE_SRC)/cbops.c $(NATIVE_SRC)/edops.c,$(wildcard $(NATIVE_SRC)/*.c))
+ifeq ($(shell uname),Darwin)
+CORE_LIBS    := -framework CoreFoundation -framework CoreAudio -framework AudioToolbox
+else
+CORE_LIBS    := -lm -lpthread -ldl
+endif
 TEST_SOURCES := $(wildcard $(NATIVE_TEST)/*.c)
-C_FORMAT_FILES := $(wildcard $(NATIVE_SRC)/ace_*.c $(NATIVE_SRC)/audio.c $(NATIVE_SRC)/keyboard.c $(NATIVE_INC)/*.h $(NATIVE_TEST)/*.c)
+C_FORMAT_FILES := $(wildcard $(NATIVE_SRC)/ace_core.c $(NATIVE_SRC)/ace_internal.h $(NATIVE_SRC)/audio.c $(NATIVE_SRC)/keyboard.c $(NATIVE_INC)/*.h $(NATIVE_TEST)/*.c)
 
 .DEFAULT_GOAL := help
 .PHONY: help setup gen ffigen drift core core-test core-test-ubsan test flutter-test integration-test analyze format \
@@ -38,14 +43,14 @@ drift: ## Generate drift database code
 
 core: ## Build the C core for the host
 	@if [ -n "$(CORE_SOURCES)" ]; then mkdir -p $(BUILD_DIR) && \
-	$(CC) $(CFLAGS) -I$(NATIVE_INC) -I$(NATIVE_SRC) -shared -fPIC -o $(BUILD_DIR)/libace.dylib $(CORE_SOURCES); \
+	$(CC) $(CFLAGS) -I$(NATIVE_INC) -I$(NATIVE_SRC) -shared -fPIC -o $(BUILD_DIR)/libace.dylib $(CORE_SOURCES) $(CORE_LIBS); \
 	else echo "core: no C sources yet (Phase 1)"; fi
 
 core-test: ## Build and run the C unit tests on the host
 	@if [ -n "$(TEST_SOURCES)" ]; then mkdir -p $(BUILD_DIR) && \
 	for t in $(TEST_SOURCES); do \
 	  n=$$(basename $$t .c); \
-	  $(CC) $(CFLAGS) -I$(NATIVE_INC) -I$(NATIVE_SRC) -o $(BUILD_DIR)/$$n $$t $(CORE_SOURCES) || exit 1; \
+	  $(CC) $(CFLAGS) -I$(NATIVE_INC) -I$(NATIVE_SRC) -o $(BUILD_DIR)/$$n $$t $(CORE_SOURCES) $(CORE_LIBS) || exit 1; \
 	  (cd $(NATIVE_TEST) && ../../$(BUILD_DIR)/$$n) || exit 1; \
 	done; \
 	else echo "core-test: no C tests yet (Phase 1)"; fi

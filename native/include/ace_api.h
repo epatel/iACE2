@@ -35,6 +35,7 @@ enum {
     ACE_SCREEN_WIDTH = 256,
     ACE_SCREEN_HEIGHT = 192,
     ACE_TAPE_NAME_MAX = 10,
+    ACE_AUDIO_SAMPLE_RATE = 44100,
 };
 
 /* Flags returned by ace_run_frame. */
@@ -99,6 +100,18 @@ ACE_EXPORT void ace_poke(ace_machine *m, uint16_t addr, uint8_t value);
 /* Beeper: the speaker level changes during the last frame, as (T-state << 1) | level pairs.
  * Valid until the next ace_run_frame. */
 ACE_EXPORT size_t ace_beeper_events(ace_machine *m, const uint32_t **events_out);
+
+/* Sound. ace_run_frame turns the beeper into 20 ms of mono float samples at
+ * ACE_AUDIO_SAMPLE_RATE. ace_audio_start opens the device and plays them, and returns 1 on
+ * success. Stop before ace_destroy, or let ace_destroy do it. Volume is 0..1 (default 1). */
+ACE_EXPORT int ace_audio_start(ace_machine *m);
+ACE_EXPORT void ace_audio_stop(ace_machine *m);
+ACE_EXPORT void ace_audio_set_volume(ace_machine *m, float volume);
+
+/* Takes up to `frames` samples, filling the rest of `out` with a fade to silence. Returns the
+ * number of real samples. The audio device calls this; tests may call it when no device is
+ * started. */
+ACE_EXPORT size_t ace_audio_read(ace_machine *m, float *out, size_t frames);
 
 #ifdef __cplusplus
 }

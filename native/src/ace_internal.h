@@ -14,6 +14,8 @@
 #ifndef ACE_INTERNAL_H
 #define ACE_INTERNAL_H
 
+#include <stdatomic.h>
+
 #include "ace_api.h"
 
 #define ACE_ROM_SIZE 0x2000
@@ -26,6 +28,9 @@
 #define ACE_KEY_WAIT_END 0x059e
 
 #define ACE_MAX_BEEPER_EVENTS 4096
+#define ACE_AUDIO_RING 8192 /* samples, about 185 ms */
+
+struct ace_audio_device;
 
 /* Z80 registers, as in xz80. */
 typedef struct {
@@ -88,6 +93,17 @@ struct ace_machine {
     uint32_t beeper_events[ACE_MAX_BEEPER_EVENTS];
     size_t beeper_count;
     int beeper_level;
+    int beeper_frame_start_level;
+
+    /* Audio: written by the emulator thread, read by the audio device thread */
+    float audio_ring[ACE_AUDIO_RING];
+    _Atomic size_t audio_write;
+    _Atomic size_t audio_read;
+    _Atomic float audio_volume;
+    float audio_hp_x, audio_hp_y; /* emulator thread only */
+    int audio_primed;             /* audio thread only */
+    float audio_last;             /* audio thread only */
+    struct ace_audio_device *audio_device;
 
     int frame_flags;
     int frame_stop;
@@ -127,6 +143,10 @@ unsigned int ace_port_in(ace_machine *m, int h, int l);
 unsigned int ace_port_out(ace_machine *m, int h, int l, int a);
 void ace_tape_load_hook(ace_machine *m, int de, int hl);
 void ace_tape_save_hook(ace_machine *m, int de, int hl);
+
+/* audio.c */
+void audio_reset(ace_machine *m);
+void audio_render_frame(ace_machine *m);
 
 /* keyboard.c */
 int keyboard_char_keys(int ace_char, int *port1, int *mask1, int *port2, int *mask2);

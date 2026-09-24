@@ -527,6 +527,7 @@ int ace_snapshot_load(ace_machine *m, const uint8_t *in, size_t len)
     for (int n = 0; n < 8; n++)
         m->keyboard_ports[n] = (unsigned char)get8(&c);
     m->beeper_level = (int)get8(&c);
+    m->beeper_frame_start_level = m->beeper_level;
     memcpy(m->mem, c.q, sizeof(m->mem));
     m->video_valid = 0;
     return 1;
@@ -546,6 +547,8 @@ ace_machine *ace_create(const uint8_t *rom, size_t rom_len)
     memset(m->mem + ACE_ROM_SIZE, 0xff, sizeof(m->mem) - ACE_ROM_SIZE);
     ace_key_release_all(m);
     z80_reset(m);
+    atomic_init(&m->audio_volume, 1.0f);
+    audio_reset(m);
     return m;
 }
 
@@ -553,6 +556,7 @@ void ace_destroy(ace_machine *m)
 {
     if (!m)
         return;
+    ace_audio_stop(m);
     ace_spool_cancel(m);
     clear_tape_load(m);
     free(m->tape_save_data);
@@ -578,6 +582,7 @@ int ace_run_frame(ace_machine *m)
     m->beeper_count = 0;
     m->tape_saved = 0;
     z80_run_frame(m);
+    audio_render_frame(m);
     if (render_screen(m))
         m->frame_flags |= ACE_FRAME_SCREEN_DIRTY;
     return m->frame_flags;

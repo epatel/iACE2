@@ -12,15 +12,22 @@ import 'frame_pacer.dart';
 /// Runs an [AceMachine] in real time and publishes its screen.
 ///
 /// Frames are paced by a [Ticker] at 50 Hz. The machine pauses while the app
-/// is hidden. Tape requests from the ROM are answered from [tapes].
+/// is hidden. Tape requests from the ROM are answered from [tapes]. With
+/// [playSound], the beeper plays while the machine runs.
 class EmulatorController extends ChangeNotifier {
-  EmulatorController({required this.machine, required this.tapes}) {
+  EmulatorController({
+    required this.machine,
+    required this.tapes,
+    this.playSound = false,
+  }) {
     _ticker = Ticker(_onTick, debugLabel: 'EmulatorController');
     _lifecycle = AppLifecycleListener(onHide: pause, onShow: resume);
   }
 
   final AceMachine machine;
   final TapeLibrary tapes;
+  final bool playSound;
+  bool _audioOpen = false;
 
   late final Ticker _ticker;
   late final AppLifecycleListener _lifecycle;
@@ -63,6 +70,10 @@ class EmulatorController extends ChangeNotifier {
   void pause() {
     if (!_ticker.isActive) return;
     _ticker.stop();
+    if (_audioOpen) {
+      machine.stopAudio();
+      _audioOpen = false;
+    }
     notifyListeners();
   }
 
@@ -70,6 +81,10 @@ class EmulatorController extends ChangeNotifier {
   void resume() {
     if (!_wantsRunning || _ticker.isActive || _disposed) return;
     _pacer.reset();
+    if (playSound && !_audioOpen) {
+      _audioOpen = machine.startAudio();
+      if (!_audioOpen) debugPrint('EmulatorController: no audio device');
+    }
     _ticker.start();
     notifyListeners();
   }
@@ -159,6 +174,7 @@ class EmulatorController extends ChangeNotifier {
   void dispose() {
     _disposed = true;
     _ticker.dispose();
+    if (_audioOpen) machine.stopAudio();
     _lifecycle.dispose();
     _screen.value?.dispose();
     _screen.dispose();

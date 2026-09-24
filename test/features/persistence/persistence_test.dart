@@ -82,6 +82,8 @@ void main() {
       expect(await settings.getInt(SettingsRepository.lastPage), 13);
       expect(await settings.getBool(SettingsRepository.stickyShift), isTrue);
       expect(await settings.getBool(SettingsRepository.lastPage), isNull);
+      await settings.setDouble(SettingsRepository.volume, 0.25);
+      expect(await settings.getDouble(SettingsRepository.volume), 0.25);
       await db.close();
     });
 

@@ -21,6 +21,9 @@ class SettingsRepository {
   /// The one-time import from iACE 1.x has run (bool).
   static const legacyImportDone = 'legacy_import_done';
 
+  /// Beeper volume, 0..1 (double).
+  static const volume = 'volume';
+
   Future<String?> get(String key) async {
     final row = await (_db.select(
       _db.settings,
@@ -37,6 +40,11 @@ class SettingsRepository {
   Future<int?> getInt(String key) async => int.tryParse(await get(key) ?? '');
 
   Future<void> setInt(String key, int value) => set(key, '$value');
+
+  Future<double?> getDouble(String key) async =>
+      double.tryParse(await get(key) ?? '');
+
+  Future<void> setDouble(String key, double value) => set(key, '$value');
 
   Future<bool?> getBool(String key) async => switch (await get(key)) {
     'true' => true,

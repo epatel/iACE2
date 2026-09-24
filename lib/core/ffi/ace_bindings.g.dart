@@ -5,6 +5,24 @@
 import 'dart:ffi' as ffi;
 
 @ffi.Native<
+  ffi.Size Function(ffi.Pointer<ace_machine>, ffi.Pointer<ffi.Float>, ffi.Size)
+>()
+external int ace_audio_read(
+  ffi.Pointer<ace_machine> m,
+  ffi.Pointer<ffi.Float> out,
+  int frames,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<ace_machine>, ffi.Float)>()
+external void ace_audio_set_volume(ffi.Pointer<ace_machine> m, double volume);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<ace_machine>)>()
+external int ace_audio_start(ffi.Pointer<ace_machine> m);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<ace_machine>)>()
+external void ace_audio_stop(ffi.Pointer<ace_machine> m);
+
+@ffi.Native<
   ffi.Size Function(
     ffi.Pointer<ace_machine>,
     ffi.Pointer<ffi.Pointer<ffi.Uint32>>,
@@ -126,6 +144,8 @@ external void ace_tape_supply(
   ffi.Pointer<ffi.Uint8> tape,
   int len,
 );
+
+const int ACE_AUDIO_SAMPLE_RATE = 44100;
 
 const int ACE_FRAME_SCREEN_DIRTY = 1;
 

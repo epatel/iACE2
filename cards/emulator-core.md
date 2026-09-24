@@ -52,3 +52,10 @@ Printable ASCII maps to itself. Special codes: 0x01 delete line, 0x02 inverse vi
 
 ## Frogger
 The bundled `frogger.dic` redefines `VLIST` to start the game: `LOAD frogger`, then `VLIST`.
+
+## Sound (`audio.c`)
+- **Rendering** (emulator thread, inside `ace_run_frame`): each frame's beeper events become 882 samples, 20 ms at `ACE_AUDIO_SAMPLE_RATE` = 44100. Each sample is the fraction of its T-state slice the speaker was high (a box filter, which avoids aliasing). That then goes through a DC-blocking high-pass (`y = 0.995·(y' + x − x')`, about 35 Hz; the real speaker is AC-coupled), scaled by 0.5·volume. The idle speaker is therefore silent even though keyboard scans (`IN 0xFE`) keep pulling it low.
+- **Ring:** an 8192-sample single-producer/single-consumer ring with C11 atomics (`audio_write`/`audio_read`). If it's full, the producer drops the whole frame. The consumer (`ace_audio_read`, on the device thread) starts playing at 40 ms buffered, skips ahead above 150 ms, and on underrun fades the last sample and re-primes.
+- **Device:** vendored `native/third_party/miniaudio.h` (v0.11.25, public domain/MIT-0) configured in `ace_miniaudio.h`: playback only, CoreAudio, AAudio or OpenSL. On iOS the implementation must be Objective-C, so the hook compiles `miniaudio_impl.m` there and `miniaudio_impl.c` elsewhere. The iOS session category is **Playback + mix-with-others**: it plays with the silent switch on, as iACE 1.x did, and doesn't stop other apps' music. miniaudio's default, PlayAndRecord, would ask for microphone access.
+- `ace_audio_start`/`stop` open and close the device; `EmulatorController(playSound: true)` does this on resume/pause. Tests never open a device; they call `ace_audio_read` directly.
+- **Measured:** `200 1000 BEEP` → 625 Hz (the manual's period unit is 8 µs: 200·8 µs = 1.6 ms). On the host Mac the device consumed 2.98 s of 3.00 s produced. It was verified running on the iPad simulator and via AAudio on the Android emulator (`dumpsys audio`: started, 44.1 kHz mono).

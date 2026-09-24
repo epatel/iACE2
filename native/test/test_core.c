@@ -1,5 +1,6 @@
 /* Host tests for the Jupiter ACE core. Run with `make core-test` (working directory native/test). */
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -378,6 +379,90 @@ static void test_beeper_events(void)
     ace_destroy(m);
 }
 
+/* Renders frames while spooling and collects every audio sample produced. */
+static size_t collect_audio(ace_machine *m, int frames, float *out, size_t cap)
+{
+    size_t total = 0;
+    for (int n = 0; n < frames; n++) {
+        ace_run_frame(m);
+        float buf[1024];
+        size_t got = ace_audio_read(m, buf, 1024);
+        for (size_t k = 0; k < got && total < cap; k++)
+            out[total++] = buf[k];
+    }
+    return total;
+}
+
+static void test_audio_silent_when_idle(void)
+{
+    ace_machine *m = boot();
+    static float samples[44100];
+    size_t n = collect_audio(m, 50, samples, 44100);
+    CHECK(n > 30000); /* about a second, minus the priming delay */
+    float peak = 0;
+    for (size_t k = 0; k < n; k++)
+        peak = fabsf(samples[k]) > peak ? fabsf(samples[k]) : peak;
+    CHECK(peak < 0.01f);
+    ace_destroy(m);
+}
+
+static void test_audio_beep_pitch(void)
+{
+    ace_machine *m = boot();
+    ace_spool(m, "200 1000 BEEP\n");
+    static float samples[44100 * 3];
+    size_t n = collect_audio(m, 150, samples, 44100 * 3);
+
+    /* Count rising crossings with hysteresis over the whole capture: the 1 s tone dominates. */
+    int crossings = 0, below = 1;
+    float peak = 0;
+    for (size_t k = 0; k < n; k++) {
+        if (below && samples[k] > 0.05f) {
+            crossings++;
+            below = 0;
+        } else if (!below && samples[k] < -0.05f) {
+            below = 1;
+        }
+        peak = fabsf(samples[k]) > peak ? fabsf(samples[k]) : peak;
+    }
+    int hz = crossings; /* per second of tone */
+    printf("test_core: 200 1000 BEEP measured %d Hz, peak %.2f\n", hz, peak);
+    /* ACE manual: BEEP ( period in 8 us units, duration in ms ): 200 -> 1600 us -> 625 Hz. */
+    CHECK(hz > 580 && hz < 670);
+    CHECK(peak > 0.15f && peak <= 0.5f);
+    ace_destroy(m);
+}
+
+static void test_audio_volume_and_priming(void)
+{
+    ace_machine *m = boot();
+    float buf[4096];
+    ace_audio_set_volume(m, 0.0f);
+    ace_spool(m, "100 500 BEEP\n");
+    static float samples[44100];
+    size_t n = collect_audio(m, 60, samples, 44100);
+    float peak = 0;
+    for (size_t k = 0; k < n; k++)
+        peak = fabsf(samples[k]) > peak ? fabsf(samples[k]) : peak;
+    CHECK(peak < 0.001f);
+    ace_destroy(m);
+
+    /* Priming: less than 40 ms buffered gives no real samples. */
+    ace_machine *fresh = ace_create(rom, rom_len);
+    ace_run_frame(fresh); /* 20 ms */
+    CHECK(ace_audio_read(fresh, buf, 256) == 0);
+    ace_run_frame(fresh);
+    ace_run_frame(fresh); /* 60 ms */
+    CHECK(ace_audio_read(fresh, buf, 256) == 256);
+
+    /* Nobody reading for a long time: the ring does not overflow into garbage. */
+    for (int k = 0; k < 500; k++)
+        ace_run_frame(fresh);
+    size_t got = ace_audio_read(fresh, buf, 4096);
+    CHECK(got > 0 && got <= 4096);
+    ace_destroy(fresh);
+}
+
 int main(void)
 {
     rom = read_file("../../assets/ace.rom", &rom_len);
@@ -396,6 +481,9 @@ int main(void)
     test_spool_waits_for_input_line();
     test_frogger_tape_loads();
     test_beeper_events();
+    test_audio_silent_when_idle();
+    test_audio_beep_pitch();
+    test_audio_volume_and_priming();
 
     free(rom);
     printf("test_core: %d checks, %d failures\n", checks, failures);
