@@ -44,11 +44,23 @@ No data is collected. The app has no network access of its own; it only opens li
 
 Play Console data safety answers: no data collected, no data shared.
 
+## Graphics (Google Play)
+
+Made by `python3 tool/make_store_graphics.py`, from screenshots taken of the running app on the Android emulators. Those use portrait, Android demo mode for a clean status bar (10:00, full battery), and a 1080×2160 display for phones, because Play rejects screenshots longer than 2:1.
+
+| Play Console field | File |
+|---|---|
+| App icon (512×512) | `store/graphics/icon-512.png` |
+| Feature graphic (1024×500) | `store/graphics/feature-graphic.png` |
+| Phone screenshots | `store/screenshots/phone-1-forth.png`, `phone-2-frogger.png`, `phone-3-settings.png` |
+| 7-inch and 10-inch tablet screenshots | `store/screenshots/tablet-1-cover.png` … `tablet-5-settings.png` (1600×2560; the same set for both sizes) |
+
 ## Checklist before submitting
 - [ ] iOS: signing team `67Y4XH38L7`, bundle `com.memention.iACE`, version 2.0.0 (build > the 1.2 build)
 - [ ] Android: create the upload key with `make keystore` (then `make build-android`) and back up the keystore and its password
 - [x] Privacy policy: https://github.com/epatel/iACE2/blob/main/PRIVACY.md
-- [ ] Screenshots: iPad 13" and 11", iPhone 6.9" and 6.1", Android 10" tablet and phone (portrait)
+- [x] Screenshots for Android tablet and phone (portrait): `store/screenshots/`
+- [ ] Screenshots: iPad 13" and 11", iPhone 6.9" and 6.1" (App Store)
 - [ ] Note in the description that the manual view is tablet-only; phones link to the PDF
 - [x] Public source code URL (GPL): https://github.com/epatel/iACE2 (in the About dialog)
 - [x] ROM: Boldfield Computing (Paul Downham), who held the ACE rights after Jupiter Cantab, wrote in September 1998 that the ROM listing had been given away and that nobody would object to the emulator. The email is in [docs/legal/boldcomp.txt](../docs/legal/boldcomp.txt)
