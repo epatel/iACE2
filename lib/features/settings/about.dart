@@ -23,7 +23,9 @@ void registerLicenses() {
     );
     yield const LicenseEntryWithLineBreaks(
       ['Jupiter ACE ROM and manual'],
-      'The Jupiter ACE ROM (c) 1982 Jupiter Cantab. The Jupiter ACE User '
+      'The Jupiter ACE ROM (c) 1982 Jupiter Cantab, included with the '
+      'permission of Boldfield Computing, who later held the rights. '
+      'The Jupiter ACE User '
       "Manual (c) 1982 Steven Vickers; the scanned edition is from the Jupiter "
       'Ace Archive, www.jupiter-ace.co.uk. "Jupiter ACE" is a trademark of '
       'Andrews UK Ltd.',

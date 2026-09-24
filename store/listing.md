@@ -48,4 +48,5 @@ No data is collected. The app has no network access of its own; it only opens li
 - [ ] Screenshots: iPad 13" and 11", iPhone 6.9" and 6.1", Android 10" tablet and phone (portrait)
 - [ ] Note in the description that the manual view is tablet-only; phones link to the PDF
 - [x] Public source code URL (GPL): https://github.com/epatel/iACE2 (in the About dialog)
-- [ ] Confirm the rights to distribute the ROM and the manual scan, and the "Jupiter ACE" naming with Andrews UK Ltd
+- [x] ROM: Boldfield Computing (Paul Downham), who held the ACE rights after Jupiter Cantab, wrote in September 1998 that the ROM listing had been given away and that nobody would object to the emulator. The email is in [docs/legal/boldcomp.txt](../docs/legal/boldcomp.txt)
+- [ ] Manual scan (Jupiter Ace Archive) and the "Jupiter ACE" name (trademark of Andrews UK Ltd): still to confirm

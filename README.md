@@ -90,6 +90,7 @@ See [cards/persistence-migrations.md](cards/persistence-migrations.md).
 - PDF rendering: [pdfrx](https://pub.dev/packages/pdfrx) (PDFium).
 - Audio output: [miniaudio](https://miniaud.io) by David Reid (public domain / MIT-0).
 - The Jupiter ACE emulator this grew from: xAce by Edward Patel (1999), improved by [Lawrence Woodman](https://github.com/LawrenceWoodman/xAce).
+- The ACE ROM is included with the permission of Boldfield Computing, who later held the Jupiter ACE rights ([their 1998 email](docs/legal/boldcomp.txt)).
 - The manual scan comes from [jupiter-ace.co.uk](http://www.jupiter-ace.co.uk). Frogger is by T. Skinner.
 
 The code is licensed under the **GNU General Public License v2 or later** (see [LICENSE](LICENSE)), following the xz80 and xAce sources it builds on. The app's About dialog lists every licence.
