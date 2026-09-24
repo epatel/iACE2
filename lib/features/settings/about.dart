@@ -31,6 +31,9 @@ void registerLicenses() {
   });
 }
 
+/// Where the source code is published (GPL).
+const sourceUrl = 'https://github.com/epatel/iACE2';
+
 Future<void> showAbout(BuildContext context) async {
   final info = await PackageInfo.fromPlatform();
   if (!context.mounted) return;
@@ -43,10 +46,12 @@ Future<void> showAbout(BuildContext context) async {
         'A Jupiter ACE emulator with the original user manual.\n'
         'Copyright (C) 1999-2026 Edward Patel and contributors.\n'
         'Free software under the GNU General Public License version 2 '
-        'or later: you may share and change it under its terms.',
+        'or later: you may share and change it under its terms. '
+        'Source code: $sourceUrl',
     children: [
       const SizedBox(height: 16),
       for (final (label, url) in [
+        ('Source code on GitHub', sourceUrl),
         ('memention.com/iace', 'http://memention.com/iace'),
         ('jupiter-ace.com', 'https://jupiter-ace.com'),
       ])
