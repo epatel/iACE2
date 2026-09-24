@@ -40,8 +40,13 @@ Future<EmulatorController> pumpApp(WidgetTester tester) async {
   );
   runFrames(controller, 100);
   await tester.pumpWidget(
-    IaceApp(controller: controller, keyboardMap: keyboardMap),
+    IaceApp(
+      controller: controller,
+      keyboardMap: keyboardMap,
+      drawersOpen: true,
+    ),
   );
+  await tester.pumpAndSettle();
   addTearDown(() async {
     await tester.pumpWidget(const SizedBox());
     controller.dispose();

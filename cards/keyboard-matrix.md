@@ -13,3 +13,4 @@
 - `KeyboardController` handles press and release, multi-touch counts, sticky shift and spool cancelling.
 - **Minimum hold:** the ROM debounces and needs a key down for **3 frames** (60 ms), measured. A release that comes sooner is deferred until the key has been down for `minHoldFrames` = 4 emulator frames. It uses `EmulatorController.addFrameListener`. Without this, quick taps (and `adb shell input tap`) are lost.
 - The screen and keyboard sit in `PortraitFrame` (shell), which pillarboxes wide windows (decision 6 in the plan).
+- **In the drawer:** the keyboard drawer has a vertical-drag recognizer. It is alone in the gesture arena, so it wins on pointer-down and fires at once. The shell only treats a touch as a drawer drag after `kTouchSlop` of travel, and then calls `KeyboardController.cancelAll()`. Without this, every key press was cancelled the moment it started.

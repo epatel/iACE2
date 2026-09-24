@@ -18,3 +18,4 @@ The shared objective and phase list are in `project-plan.md`. Check which phase 
 - When adding or changing a DB table, a setting, the snapshot format or legacy import → read `cards/persistence-migrations.md`
 - When working on the manual viewer or `annotations.json` → read `cards/manual-annotations.md`
 - When working on keyboard input, the key map or the spooler → read `cards/keyboard-matrix.md`
+- When working on the drawers, the settings lid, the layout or the app icon → read `project-plan.md` §3 and the doc comments in `lib/features/shell/drawer_controller.dart` (the iACE 1.x drawer rules, in 768-unit coordinates)

@@ -8,7 +8,7 @@ The Jupiter ACE (1982) was the odd one out among the home micros of the 80s. It 
 
 ## Status
 
-The emulator core, the screen, the on-screen keyboard, persistence, sound and the manual all work on iOS and Android. The drawer UI is next. [project-plan.md](project-plan.md) lists every phase and its state.
+Everything from iACE 1.x works on iOS and Android: the emulator, keyboard, sound, the manual with runnable examples, the drawer UI, and saved tapes and sessions. Next come the tape browser with `.TAP` import/export and release polish. [project-plan.md](project-plan.md) lists every phase and its state.
 
 | | |
 |---|---|
@@ -18,7 +18,8 @@ The emulator core, the screen, the on-screen keyboard, persistence, sound and th
 | ✅ | `SAVE` / `LOAD` to a SQLite database, a session that survives restarts, and import from iACE 1.2 |
 | ✅ | Beeper sound through miniaudio (CoreAudio / AAudio / OpenSL) |
 | ✅ | The user manual (PDF) with tappable "Enter" examples that type into the ACE, and links |
-| ⏳ | The drawer UI over the manual, `.TAP` import/export |
+| ✅ | The iACE drawer UI: screen and keyboard slide down over the manual, with settings under the keyboard's lid |
+| ⏳ | Tape browser with `.TAP` import/export, release polish |
 
 ## Getting started
 
@@ -66,7 +67,7 @@ flowchart TB
 - **`native/`** is the machine in portable C: memory map, ROM tape patches, keyboard matrix, the "type from the manual" spooler, video, versioned snapshots and beeper events. It has no globals and no platform code.
 - **`lib/core/ffi/`** holds the generated bindings and `AceMachine`, the only Dart class that touches FFI types.
 - **`lib/core/db/`** is the drift database. Every schema version is committed in `drift_schemas/` and checked by tests.
-- **`lib/features/`** is organised by feature: `emulator`, `keyboard`, `tapes`, `settings`, `legacy`, `shell`.
+- **`lib/features/`** is organised by feature: `emulator`, `keyboard`, `manual`, `tapes`, `settings`, `legacy`, `shell`.
 - **`tool/`** has the converters that extract assets from the original app in `archive/iACE`.
 - **`cards/`** has short reference notes for each area (emulator internals, FFI, persistence, keyboard, manual). [CLAUDE.md](CLAUDE.md) says when to read which.
 

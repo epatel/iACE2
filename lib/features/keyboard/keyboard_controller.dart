@@ -101,6 +101,19 @@ class KeyboardController extends ChangeNotifier {
     }
   }
 
+  /// Releases every held key at once (not latched shifts), e.g. when a touch
+  /// that started on a key turns out to be a drawer drag.
+  void cancelAll() {
+    if (_held.isEmpty) return;
+    for (final key in _held.keys) {
+      _setKey(key, down: false);
+    }
+    _held.clear();
+    _pressedAtFrame.clear();
+    _pendingReleases.clear();
+    notifyListeners();
+  }
+
   void _setKey(KeyDef key, {required bool down}) =>
       emulator.machine.key(key.port, key.mask, down: down);
 

@@ -16,6 +16,7 @@ import 'features/keyboard/keyboard_map.dart';
 import 'features/legacy/legacy_import.dart';
 import 'features/manual/manual_annotations.dart';
 import 'features/manual/manual_controller.dart';
+import 'features/settings/settings_lid.dart';
 import 'features/settings/settings_repository.dart';
 import 'features/shell/home_page.dart';
 import 'features/tapes/db_tape_library.dart';
@@ -48,8 +49,12 @@ Future<void> main() async {
 
   final rom = await rootBundle.load('assets/ace.rom');
   final keyboardMap = await KeyboardMap.load(rootBundle);
-  final machine = AceMachine(rom.buffer.asUint8List())
-    ..volume = await settings.getDouble(SettingsRepository.volume) ?? 1.0;
+  final machine = AceMachine(rom.buffer.asUint8List());
+  final volume = VolumeSetting(
+    initial: await settings.getDouble(SettingsRepository.volume) ?? 1.0,
+    machine: machine,
+    settings: settings,
+  );
   final controller = EmulatorController(
     machine: machine,
     tapes: tapes,
@@ -88,6 +93,10 @@ Future<void> main() async {
       keyboard: keyboard,
       manual: manual,
       annotations: annotations,
+      settings: settings,
+      volume: volume,
+      showRevealHint:
+          await settings.getBool(SettingsRepository.revealHintShown) != true,
     ),
   );
 }
@@ -100,6 +109,10 @@ class IaceApp extends StatelessWidget {
     this.keyboard,
     this.manual,
     this.annotations,
+    this.settings,
+    this.volume,
+    this.showRevealHint = false,
+    this.drawersOpen = false,
   });
 
   final EmulatorController controller;
@@ -109,12 +122,29 @@ class IaceApp extends StatelessWidget {
   final KeyboardController? keyboard;
   final ManualController? manual;
   final ManualAnnotations? annotations;
+  final SettingsRepository? settings;
+
+  /// Created for [controller]'s machine if not given.
+  final VolumeSetting? volume;
+  final bool showRevealHint;
+  final bool drawersOpen;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: controller),
+        Provider<SettingsRepository?>.value(value: settings),
+        if (volume case final volume?)
+          ChangeNotifierProvider.value(value: volume)
+        else
+          ChangeNotifierProvider(
+            create: (_) => VolumeSetting(
+              initial: 1.0,
+              machine: controller.machine,
+              settings: settings,
+            ),
+          ),
         if (keyboard case final keyboard?)
           ChangeNotifierProvider.value(value: keyboard)
         else
@@ -130,6 +160,8 @@ class IaceApp extends StatelessWidget {
           keyboardMap: keyboardMap,
           manual: manual,
           annotations: annotations,
+          showRevealHint: showRevealHint,
+          drawersOpen: drawersOpen,
         ),
       ),
     );
