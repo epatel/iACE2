@@ -45,7 +45,8 @@ make run-ios      # or: make run-android DEVICE=<id>   (see `flutter devices`)
 | `gen` / `ffigen` / `drift` | Regenerate the FFI bindings and database code |
 | `db-schema-dump` / `db-migration-test` | Snapshot the database schema; run the schema/migration tests |
 | `assets` | Re-extract assets from the original iACE (keyboard map, Frogger tape, …) |
-| `build-ios` / `build-android` | Release `.ipa` / `.aab` |
+| `build-ios` / `build-android` | Release `.ipa` / `.aab`, versioned from the `VERSION` file |
+| `version` | Show the version from `VERSION` (`MAJOR.MINOR.PATCH (BUILD)`) |
 
 ## How it fits together
 

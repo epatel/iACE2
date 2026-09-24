@@ -1,6 +1,13 @@
 # iACE2 — management entry points. See project-plan.md §5.
 # Targets for later phases skip themselves with a note until their inputs exist.
 
+# App version, from the VERSION file (MAJOR, MINOR, PATCH, BUILD). It overrides the version
+# in pubspec.yaml for release builds.
+include VERSION
+VERSION_NAME := $(MAJOR).$(MINOR).$(PATCH)
+VERSION_CODE := $(BUILD)
+VERSION_FLAGS := --build-name=$(VERSION_NAME) --build-number=$(VERSION_CODE)
+
 FLUTTER ?= flutter
 DART    ?= dart
 CC      ?= cc
@@ -22,7 +29,7 @@ C_FORMAT_FILES := $(wildcard $(NATIVE_SRC)/ace_core.c $(NATIVE_SRC)/ace_internal
 
 .DEFAULT_GOAL := help
 .PHONY: help setup gen ffigen drift core core-test core-test-ubsan test flutter-test integration-test analyze format \
-        run-ios run-android build-ios build-android assets db-schema-dump db-migration-test clean
+        run-ios run-android build-ios build-android version assets db-schema-dump db-migration-test clean
 
 help: ## List targets
 	@grep -hE '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*## "}{printf "  \033[36m%-18s\033[0m %s\n",$$1,$$2}'
@@ -80,11 +87,14 @@ run-ios: ## Run on an iPad (device or simulator)
 run-android: ## Run on an Android tablet (device or emulator)
 	$(FLUTTER) run -d "$${DEVICE:-android}"
 
-build-ios: ## Build the iOS archive (.ipa)
-	$(FLUTTER) build ipa --release
+build-ios: ## Build the iOS archive (.ipa), versioned from VERSION
+	$(FLUTTER) build ipa --release $(VERSION_FLAGS)
 
-build-android: ## Build the Android app bundle (.aab)
-	$(FLUTTER) build appbundle --release
+build-android: ## Build the Android app bundle (.aab), versioned from VERSION
+	$(FLUTTER) build appbundle --release $(VERSION_FLAGS)
+
+version: ## Show the version from VERSION used for builds
+	@echo "$(VERSION_NAME) ($(VERSION_CODE))"
 
 assets: ## Convert original iACE resources into assets/ (annotations, keyboard map, tapes)
 	@if [ -d tool ] && ls tool/*.py >/dev/null 2>&1; then for s in tool/*.py; do python3 $$s || exit 1; done; \
