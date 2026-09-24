@@ -52,3 +52,6 @@ app.*.map.json
 
 # Local copy of the original iACE (https://github.com/epatel/iACE), used by tool/ converters
 /archive/
+
+# Local notes, not part of the project
+/initial-idea.md
