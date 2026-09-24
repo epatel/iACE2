@@ -9,7 +9,7 @@ class SettingsRepository {
 
   final AppDatabase _db;
 
-  /// Manual page last shown (int).
+  /// Manual page last shown: PDF page number, 1-based (int).
   static const lastPage = 'last_page';
 
   /// SHIFT / SYMBOL SHIFT latch when tapped (bool).

@@ -8,7 +8,7 @@ The Jupiter ACE (1982) was the odd one out among the home micros of the 80s. It 
 
 ## Status
 
-The emulator core, the screen, the on-screen keyboard, persistence and sound all work on iOS and Android. The manual viewer and the drawer UI are next. [project-plan.md](project-plan.md) lists every phase and its state.
+The emulator core, the screen, the on-screen keyboard, persistence, sound and the manual all work on iOS and Android. The drawer UI is next. [project-plan.md](project-plan.md) lists every phase and its state.
 
 | | |
 |---|---|
@@ -17,7 +17,8 @@ The emulator core, the screen, the on-screen keyboard, persistence and sound all
 | ✅ | Live screen with pixel-perfect scaling, and the photo keyboard with multi-touch and sticky shift |
 | ✅ | `SAVE` / `LOAD` to a SQLite database, a session that survives restarts, and import from iACE 1.2 |
 | ✅ | Beeper sound through miniaudio (CoreAudio / AAudio / OpenSL) |
-| ⏳ | The manual with runnable examples, the drawer UI, `.TAP` import/export |
+| ✅ | The user manual (PDF) with tappable "Enter" examples that type into the ACE, and links |
+| ⏳ | The drawer UI over the manual, `.TAP` import/export |
 
 ## Getting started
 
@@ -82,6 +83,7 @@ See [cards/persistence-migrations.md](cards/persistence-migrations.md).
 ## Credits and license
 
 - Z80 emulation: **xz80** by Ian Collier (1994).
+- PDF rendering: [pdfrx](https://pub.dev/packages/pdfrx) (PDFium).
 - Audio output: [miniaudio](https://miniaud.io) by David Reid (public domain / MIT-0).
 - The Jupiter ACE emulator this grew from: xAce by Edward Patel (1999), improved by [Lawrence Woodman](https://github.com/LawrenceWoodman/xAce).
 - The manual scan comes from [jupiter-ace.co.uk](http://www.jupiter-ace.co.uk). Frogger is by T. Skinner.

@@ -1,0 +1,942 @@
+{
+ "pageWidth": 612.0,
+ "pageHeight": 792.0,
+ "annotations": [
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 6,
+   "x": 77.31,
+   "y": 103.88,
+   "width": 142.53,
+   "height": 27.38
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 55,
+   "x": 317.27,
+   "y": 107.1,
+   "width": 219.84,
+   "height": 66.03
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 7,
+   "x": 78.11,
+   "y": 139.31,
+   "width": 142.53,
+   "height": 33.82
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 65,
+   "x": 317.27,
+   "y": 179.57,
+   "width": 215.01,
+   "height": 46.71
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 9,
+   "x": 78.92,
+   "y": 181.18,
+   "width": 216.62,
+   "height": 44.29
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 70,
+   "x": 318.88,
+   "y": 232.72,
+   "width": 208.56,
+   "height": 51.54
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 14,
+   "x": 78.92,
+   "y": 235.94,
+   "width": 213.39,
+   "height": 43.48
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 78,
+   "x": 318.88,
+   "y": 287.48,
+   "width": 118.37,
+   "height": 47.51
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 17,
+   "x": 78.11,
+   "y": 289.89,
+   "width": 221.45,
+   "height": 55.56
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 85,
+   "x": 322.11,
+   "y": 355.12,
+   "width": 221.45,
+   "height": 62.81
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 20,
+   "x": 77.31,
+   "y": 355.93,
+   "width": 219.84,
+   "height": 58.78
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 27,
+   "x": 78.92,
+   "y": 419.54,
+   "width": 214.2,
+   "height": 40.26
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 90,
+   "x": 320.49,
+   "y": 422.76,
+   "width": 206.95,
+   "height": 45.9
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 35,
+   "x": 80.53,
+   "y": 475.11,
+   "width": 222.25,
+   "height": 62.01
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 95,
+   "x": 320.49,
+   "y": 475.91,
+   "width": 220.64,
+   "height": 60.39
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 102,
+   "x": 323.72,
+   "y": 541.94,
+   "width": 187.63,
+   "height": 49.93
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 42,
+   "x": 79.72,
+   "y": 542.75,
+   "width": 223.06,
+   "height": 49.12
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 47,
+   "x": 79.72,
+   "y": 595.89,
+   "width": 229.5,
+   "height": 74.08
+  },
+  {
+   "page": 4,
+   "action": "goto",
+   "target": 108,
+   "x": 323.72,
+   "y": 597.51,
+   "width": 137.7,
+   "height": 49.12
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 141,
+   "x": 316.47,
+   "y": 92.61,
+   "width": 191.65,
+   "height": 51.54
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 111,
+   "x": 74.89,
+   "y": 94.22,
+   "width": 218.23,
+   "height": 60.39
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 118,
+   "x": 74.89,
+   "y": 157.83,
+   "width": 219.84,
+   "height": 73.28
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 147,
+   "x": 317.27,
+   "y": 158.64,
+   "width": 186.82,
+   "height": 50.73
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 125,
+   "x": 76.5,
+   "y": 235.94,
+   "width": 218.23,
+   "height": 54.76
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 151,
+   "x": 318.88,
+   "y": 236.75,
+   "width": 208.56,
+   "height": 62.81
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 132,
+   "x": 77.31,
+   "y": 304.39,
+   "width": 211.78,
+   "height": 60.39
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 157,
+   "x": 319.69,
+   "y": 306.81,
+   "width": 153.0,
+   "height": 103.88
+  },
+  {
+   "page": 5,
+   "action": "goto",
+   "target": 135,
+   "x": 79.72,
+   "y": 371.23,
+   "width": 230.31,
+   "height": 64.42
+  },
+  {
+   "page": 5,
+   "action": "open",
+   "url": "http://www.jupiter-ace.co.uk",
+   "x": 225.47,
+   "y": 583.82,
+   "width": 169.91,
+   "height": 28.18
+  },
+  {
+   "page": 10,
+   "action": "type",
+   "text": "vlist\n",
+   "x": 544.36,
+   "y": 251.24,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 17,
+   "action": "type",
+   "text": ": BILL\n  VLIST VLIST\n;\n",
+   "x": 540.33,
+   "y": 236.75,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 18,
+   "action": "type",
+   "text": ": BEN\n CR .\" Aah bobbop tipop weed. \"\n;\n",
+   "x": 543.55,
+   "y": 608.78,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 20,
+   "action": "type",
+   "text": "2 2 + .\n",
+   "x": 542.75,
+   "y": 153.0,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 21,
+   "action": "type",
+   "text": "10 11 + 12 + .\n",
+   "x": 541.94,
+   "y": 580.59,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 23,
+   "action": "type",
+   "text": "11 4 / .\n",
+   "x": 545.97,
+   "y": 151.39,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 23,
+   "action": "type",
+   "text": "11 4 mod .\n",
+   "x": 544.36,
+   "y": 226.28,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 23,
+   "action": "type",
+   "text": "11 4 /mod . .\n",
+   "x": 544.36,
+   "y": 301.97,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 24,
+   "action": "type",
+   "text": "6 5 2 */ .\n",
+   "x": 542.75,
+   "y": 339.02,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 24,
+   "action": "type",
+   "text": "6 5 * 2 / .\n",
+   "x": 542.75,
+   "y": 380.89,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 25,
+   "action": "type",
+   "text": "8995 15 115 */ .\n",
+   "x": 542.75,
+   "y": 276.21,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 25,
+   "action": "type",
+   "text": "32767 1+ .\n",
+   "x": 541.94,
+   "y": 377.67,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 25,
+   "action": "type",
+   "text": "32768 .\n",
+   "x": 541.14,
+   "y": 595.09,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 26,
+   "action": "type",
+   "text": "256 256 * .\n",
+   "x": 541.94,
+   "y": 92.61,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 26,
+   "action": "type",
+   "text": "256 256 * 256 / .\n",
+   "x": 541.94,
+   "y": 150.58,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 26,
+   "action": "type",
+   "text": "256 256 256 */ .\n",
+   "x": 541.94,
+   "y": 193.26,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 26,
+   "action": "type",
+   "text": "1 +\n",
+   "x": 540.33,
+   "y": 413.91,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 26,
+   "action": "type",
+   "text": "1 0 / .\n",
+   "x": 537.11,
+   "y": 566.1,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 27,
+   "action": "type",
+   "text": ": DOUBLE\n  2 * .\n;\n",
+   "x": 540.33,
+   "y": 196.48,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 27,
+   "action": "type",
+   "text": "23 double\n",
+   "x": 537.11,
+   "y": 273.79,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 29,
+   "action": "type",
+   "text": ": SQ\n  DUP *\n;\n",
+   "x": 538.72,
+   "y": 546.77,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 29,
+   "action": "type",
+   "text": "6 SQ .\n",
+   "x": 537.11,
+   "y": 613.61,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 30,
+   "action": "type",
+   "text": ": SQ\n  ( k -- k*k )\n  DUP *\n;\n",
+   "x": 542.75,
+   "y": 649.04,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 34,
+   "action": "type",
+   "text": ": FORMAT\n  ( month, year -- month, year starting at March)\n SWAP 9 + DUP 12 /MOD\n 1- ROT +\n;\n",
+   "x": 539.53,
+   "y": 117.57,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 34,
+   "action": "type",
+   "text": ": YEAR\n ( year -- no. days of week 1st of March is later than it was in 1900)\n DUP 4 / +\n;\n",
+   "x": 536.31,
+   "y": 200.51,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 34,
+   "action": "type",
+   "text": ": MONTH\n ( month, no. days -- no. days of week that 1st of month is later than 1st March 1900)\n SWAP 306 * 5 + 10 / +\n ;\n",
+   "x": 533.08,
+   "y": 289.89,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 34,
+   "action": "type",
+   "text": ": DAY\n ( day, result of MONTH -- day of week )\n  2+ 7 MOD 1+\n;\n",
+   "x": 529.86,
+   "y": 361.56,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 35,
+   "action": "type",
+   "text": ": ACCURACY\n .\" 2+2=\"\n 2 1 ( ***BUG*** ) + .\n;\n",
+   "x": 541.14,
+   "y": 319.69,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 35,
+   "action": "type",
+   "text": ": DEMO\n CR .\" This demonstrates the Ace's\"\n CR .\" accuracy: \"\n ACCURACY\n;\n",
+   "x": 541.14,
+   "y": 388.14,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 35,
+   "action": "type",
+   "text": "list accuracy\n",
+   "x": 541.94,
+   "y": 512.95,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 42,
+   "action": "type",
+   "text": ": AGE\n 186\n;\n",
+   "x": 540.33,
+   "y": 217.42,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 42,
+   "action": "type",
+   "text": "185 constant age\n",
+   "x": 540.33,
+   "y": 280.23,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 42,
+   "action": "type",
+   "text": "187 constant age\nredefine age\n",
+   "x": 540.33,
+   "y": 424.37,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 42,
+   "action": "type",
+   "text": "15744 variable share\n",
+   "x": 536.31,
+   "y": 588.65,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 43,
+   "action": "type",
+   "text": "16258 share !\n",
+   "x": 540.33,
+   "y": 258.49,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 43,
+   "action": "type",
+   "text": "share @ .\n",
+   "x": 540.33,
+   "y": 331.77,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 43,
+   "action": "type",
+   "text": ": SQSH\n ( K -- )\n ( Gives SHARE the value K*K )\n SQ SHARE !\n;\n",
+   "x": 538.72,
+   "y": 471.88,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 43,
+   "action": "type",
+   "text": "share .\n",
+   "x": 537.11,
+   "y": 597.51,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 45,
+   "action": "type",
+   "text": "share ?\n",
+   "x": 541.94,
+   "y": 305.19,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 48,
+   "action": "type",
+   "text": ": BALANCE\n ( balance -- ) DUP ABS . 0< IF\n ( if balance negative )\n .\" DEBIT\" ELSE\n ( if balance positive or 0 )\n .\" CREDIT\" THEN\n;\n",
+   "x": 540.33,
+   "y": 414.71,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 50,
+   "action": "type",
+   "text": ": LUCKY?\n ( K -- 0 )\n DUP 13 = IF\n DROP 12 THEN\n;\n",
+   "x": 538.72,
+   "y": 396.99,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 51,
+   "action": "type",
+   "text": ": ?. DUP IF . ELSE DROP THEN ;\n",
+   "x": 537.92,
+   "y": 545.97,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 52,
+   "action": "type",
+   "text": ": ?. ?DUP IF . THEN ;\n",
+   "x": 528.25,
+   "y": 110.32,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 53,
+   "action": "type",
+   "text": ": FACT\n ( n -- n!)\n ?DUP IF DUP 1- FACT * ELSE 1 THEN ;\n",
+   "x": 542.75,
+   "y": 432.43,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 56,
+   "action": "type",
+   "text": ": ++\n ( adds together numbers on the stack as far as a 0 )\n BEGIN +\n ( 0 or next number, sum so far )\n OVER 0= UNTIL SWAP DROP ;\n",
+   "x": 479.13,
+   "y": 97.44,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 58,
+   "action": "type",
+   "text": ": +++\n ( adds together numbers on the stack, down to a 0)\n 0\n ( to start off the running total )\n BEGIN\n ( now running total on top, next number to add underneath)\n SWAP ?DUP WHILE + REPEAT ;\n",
+   "x": 538.72,
+   "y": 119.98,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 59,
+   "action": "type",
+   "text": ": NOS\n ( limit -- )\n 0 DO I . ( prints the counter ) LOOP ;\n",
+   "x": 542.75,
+   "y": 99.05,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 59,
+   "action": "type",
+   "text": "3 nos\n",
+   "x": 538.72,
+   "y": 195.68,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 59,
+   "action": "type",
+   "text": ": COUNTDOWN\n -1 10 DO I . -1 +LOOP ;\n",
+   "x": 539.53,
+   "y": 492.82,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 60,
+   "action": "type",
+   "text": ": STARS ( no. of rows -- ) CR 1+ 1 DO I 0 DO .\" *\" LOOP CR LOOP ;\n",
+   "x": 538.72,
+   "y": 88.58,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 63,
+   "action": "type",
+   "text": ": PRIME\n ( number number, 0 for a prime )\n 2 BEGIN\n ( number, number to try to divide into it )\n OVER OVER DUP * < 0= WHILE OVER OVER MOD 0= IF EXIT THEN 1+ REPEAT DROP 0 ;\n",
+   "x": 542.75,
+   "y": 169.11,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 63,
+   "action": "type",
+   "text": ": PRIMES ( limit -- ) 1 DO I PRIME? IF I . THEN LOOP ;\n",
+   "x": 541.94,
+   "y": 549.99,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 64,
+   "action": "type",
+   "text": ": ^ ( number -- power number raised to power) 1 SWAP ?DUP IF 0 DO OVER * LOOP THEN SWAP DROP ;\n",
+   "x": 479.94,
+   "y": 342.24,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 64,
+   "action": "type",
+   "text": ": BORE\n .\" I just go \"\n BEGIN\n .\" on and \" 0 UNTIL ;\n",
+   "x": 482.35,
+   "y": 613.61,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 66,
+   "action": "type",
+   "text": "100 VARIABLE QUAVER\n: N\n ( pitch number, length in quavers -- )\n QUAVER @ * BEEP ;\n",
+   "x": 537.11,
+   "y": 117.57,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 66,
+   "action": "type",
+   "text": "478 3 n\n",
+   "x": 536.31,
+   "y": 216.62,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 66,
+   "action": "type",
+   "text": ": PART1 ( Three blind mice ) 190 3 N 213 3 N 239 6 N ;\n",
+   "x": 530.67,
+   "y": 483.96,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 67,
+   "action": "type",
+   "text": ": PART2 ( See how they run) 159 3 N 179 2 N 179 1 N 190 5 N ;\n",
+   "x": 538.72,
+   "y": 105.49,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 67,
+   "action": "type",
+   "text": ": PART3 ( They all ran after the farmer's wife) \n 159 1 N 119 2 N 119 1 N\n 127 1 N 142 1 N 127 1 N\n 119 2 N 159 1 N 159 2 N ;\n",
+   "x": 537.92,
+   "y": 342.24,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 67,
+   "action": "type",
+   "text": ": MICE PART1 PART1 PART2 119 1 N PART2 PART3 PART3 PART3 179 1 N PART1 ;\n",
+   "x": 535.5,
+   "y": 441.28,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 68,
+   "action": "type",
+   "text": ": SEMS\n ( semitones above middle C -- pitch number)\n 36 +\n ( semitones above bottom C )\n 12 /MOD SWAP\n ( no. octaves, no. spare semitones )\n 3822 SWAP ?DUP IF\n ( multiply by 17843/18904 for each spare semitone )\n 0 DO 17843 18904 */ LOOP THEN SWAP ?DUP IF\n ( divide by 2 for each octave )\n 0 DO 2 / LOOP THEN ;\n",
+   "x": 541.94,
+   "y": 284.26,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 70,
+   "action": "type",
+   "text": ": CHARS ( displays the character set ) 256 0 DO I EMIT LOOP ;\n",
+   "x": 537.11,
+   "y": 209.37,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 72,
+   "action": "type",
+   "text": ": GR ( 8 row numbers, ASCII code -- ) 8 * 11263 + DUP 8 + DO I C! -1 +LOOP ;\n",
+   "x": 536.31,
+   "y": 473.49,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 73,
+   "action": "type",
+   "text": "2 BASE C!\n00000100\n11110010\n00010010\n00011111\n00100001\n00100001\n11111111\n01100110\nDECIMAL\n",
+   "x": 541.14,
+   "y": 86.97,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 74,
+   "action": "type",
+   "text": "ascii abcde .\n",
+   "x": 540.33,
+   "y": 647.43,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 78,
+   "action": "type",
+   "text": "30 20 1 plot\n",
+   "x": 540.33,
+   "y": 533.08,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 81,
+   "action": "type",
+   "text": ": SGN 0> DUP + 1- ; : DRAW1 ROT ROT OVER SGN OVER SGN 4 ROLL ABS 4 ROLL ABS OVER OVER < ROT ROT 3 PICK IF SWAP THEN ; : DIAG 6 PICK 6 PICK ; : SQUARE 4 PICK IF 0 6 PICK ELSE 6 PICK 0 THEN ; : STEP 15408 C@ + SWAP 15407 C@ + SWAP 9 PICK PLOT ; : DRAW DRAW1 2 PICK DUP 2 / SWAP ?DUP IF 0 DO OVER + DUP 4 PICK > IF 3 PICK - DIAG ELSE SQUARE THEN STEP LOOP THEN 7 0 DO DROP LOOP ;\n",
+   "x": 519.39,
+   "y": 78.92,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 83,
+   "action": "type",
+   "text": "invis cls 0 24 1 plot 63 0 1 draw\n",
+   "x": 538.72,
+   "y": 161.86,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 83,
+   "action": "type",
+   "text": "invis cls 32 0 1 plot 0 45 1 draw\n",
+   "x": 538.72,
+   "y": 202.12,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 83,
+   "action": "type",
+   "text": "0 variable seed : SEEDON ( -- next value of SEED ) SEED @ 75 U* 75 0 D+ OVER OVER U< - - 1- DUP SEED ! ; : RND ( n \u2015pseudo random no. between 0 and n\u20141) SEEDON U* SWAP DROP ; : RAND ( value for seed -- ) ?DUP 0= IF 15403 @ SWAP THEN SEED ! ;\n",
+   "x": 538.72,
+   "y": 618.44,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 84,
+   "action": "type",
+   "text": ": MEASLES ( plotting mode -- plotting mode) CLS BEGIN 64 RND 46 RND 3 PICK PLOT 0 UNTIL ;\n",
+   "x": 536.31,
+   "y": 582.21,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 90,
+   "action": "type",
+   "text": "2.1 2.1 F+ F.\n",
+   "x": 536.31,
+   "y": 260.1,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 90,
+   "action": "type",
+   "text": "2.1 2.1 + .\n",
+   "x": 534.69,
+   "y": 359.95,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 90,
+   "action": "type",
+   "text": "11. 4. f/ f.\n",
+   "x": 534.69,
+   "y": 543.55,
+   "width": 56.37,
+   "height": 35.43
+  },
+  {
+   "page": 156,
+   "action": "type",
+   "text": ": NOISE [ 16 BASE C! ] BEGIN FEFE IN FEFE OUT 0 UNTIL ;\n",
+   "x": 431.62,
+   "y": 169.11,
+   "width": 56.37,
+   "height": 35.43
+  }
+ ]
+}

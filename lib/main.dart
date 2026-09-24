@@ -14,6 +14,8 @@ import 'features/emulator/snapshot_store.dart';
 import 'features/keyboard/keyboard_controller.dart';
 import 'features/keyboard/keyboard_map.dart';
 import 'features/legacy/legacy_import.dart';
+import 'features/manual/manual_annotations.dart';
+import 'features/manual/manual_controller.dart';
 import 'features/settings/settings_repository.dart';
 import 'features/shell/home_page.dart';
 import 'features/tapes/db_tape_library.dart';
@@ -73,11 +75,19 @@ Future<void> main() async {
     settings.setBool(SettingsRepository.stickyShift, stickyShift);
   });
 
+  final manual = ManualController(
+    initialPage: await settings.getInt(SettingsRepository.lastPage) ?? 1,
+    onPageSettled: (page) => settings.setInt(SettingsRepository.lastPage, page),
+  );
+  final annotations = await ManualAnnotations.load(rootBundle);
+
   runApp(
     IaceApp(
       controller: controller,
       keyboardMap: keyboardMap,
       keyboard: keyboard,
+      manual: manual,
+      annotations: annotations,
     ),
   );
 }
@@ -88,6 +98,8 @@ class IaceApp extends StatelessWidget {
     required this.controller,
     required this.keyboardMap,
     this.keyboard,
+    this.manual,
+    this.annotations,
   });
 
   final EmulatorController controller;
@@ -95,6 +107,8 @@ class IaceApp extends StatelessWidget {
 
   /// Created for [controller] if not given.
   final KeyboardController? keyboard;
+  final ManualController? manual;
+  final ManualAnnotations? annotations;
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +126,11 @@ class IaceApp extends StatelessWidget {
         title: 'iACE',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: HomePage(keyboardMap: keyboardMap),
+        home: HomePage(
+          keyboardMap: keyboardMap,
+          manual: manual,
+          annotations: annotations,
+        ),
       ),
     );
   }

@@ -1,9 +1,11 @@
 # Manual and annotations
 
-- The manual is `JA-Manual-Second-Edition.pdf`, bundled as `assets/manual.pdf` and viewed with `pdfrx`. PDF page 1 is an empty cover, so the original opens at page 2 by default. The last page viewed is stored in `settings.lastpage`.
-- The original annotations are `archive/iACE/iACE/annotations.dic`, an NSKeyedArchiver plist mapping `{NSNumber page → NSArray<MyAnnotation{rect: CGRect, value: NSString}>}`. `tool/` converts them to `assets/annotations.json`, normalising `rect` to 0..1 of the page (the original is in 768-pt page-view space).
-- Annotation `value` actions:
-  - `goto N` → go to manual page `N + 2` (offset for the cover).
-  - `open URL` → open an external URL.
-  - `type TEXT` → spool `TEXT` into the emulator. `\` becomes a newline and a trailing newline is added. The original renders these as rounded 70×44 "type" buttons.
-- There is an edit mode for authoring annotations (drag to create or move, tap to edit the value). It's only available in debug builds.
+- **PDF:** `assets/manual.pdf` (the Jupiter ACE User's Manual, second edition, 184 pages of 612×792 pt) is copied from the original app by `tool/extract_annotations.py` (`make assets`). It's rendered with `pdfrx` (PDFium).
+- **Page numbers** in this app are PDF page numbers, 1-based. The printed page N is PDF page N+1. `settings.last_page` stores the PDF page. iACE 1.x counted from a blank first view, so its `lastpage` k is PDF page k−1; `LegacyImporter` converts it.
+- **Annotations:** the original `archive/iACE/iACE/annotations.dic` (NSKeyedArchiver: `{NSNumber page → [MyAnnotation{rect, value}]}`) is converted to `assets/annotations.json`. Rects are in **PDF points from the top-left**; iACE 1.x drew pages 760 pt wide, so view pt / (760/612) = PDF pt. There are 104 annotations:
+  - `type` (75): an outlined "Enter" button (70×44 view pt) in the margin. The text has `\` turned into newlines and ends with exactly one `\n`. Tapping it spools the text into the ACE.
+  - `goto` (28): an invisible area, e.g. the contents entries. The target is a PDF page (original `goto N` → PDF page N+1).
+  - `open` (1): an invisible area over a URL, opened with `url_launcher`. Android needs the `<queries>` VIEW http/https entries in the manifest.
+- **Code** (`lib/features/manual/`): `ManualAnnotations` (model and loader), `ManualController` (current page, clamping, `onPageSettled` after 2 s to save the page), `ManualPage` (the page content at page aspect ratio plus positioned annotation buttons with Semantics), and `ManualView` (`PdfDocumentViewBuilder` → `PageView` of `PdfPageView` plus a page slider). The view handles `goto`; `type` and `open` go to its `onAction`.
+- **Testing:** PDFium is not bundled for host `flutter test`, so real PDF rendering is covered by `integration_test/manual_test.dart` (passes on the iPad simulator and the Android tablet emulator). Host tests use `ManualPage` with placeholder content.
+- **Edit mode** for authoring annotations (iACE 1.x had one in simulator builds) is not ported. Edit `annotations.json`, or the original data plus the converter.

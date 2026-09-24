@@ -96,8 +96,12 @@ class LegacyImporter {
       throw const FormatException('not a dictionary');
     }
     final imported = <String>[];
-    Future<void> copy(String oldKey, String newKey) async {
-      final value = plist[oldKey];
+    Future<void> copy(
+      String oldKey,
+      String newKey, [
+      Object? Function(Object?) convert = _same,
+    ]) async {
+      final value = convert(plist[oldKey]);
       if (value == null || await settings.contains(newKey)) return;
       switch (value) {
         case int():
@@ -110,9 +114,16 @@ class LegacyImporter {
       imported.add(newKey);
     }
 
-    await copy('lastpage', SettingsRepository.lastPage);
+    // iACE 1.x counted pages from its blank first view: its page k is PDF page k - 1.
+    await copy(
+      'lastpage',
+      SettingsRepository.lastPage,
+      (v) => v is int && v > 1 ? v - 1 : null,
+    );
     await copy('toggle_shift_keys', SettingsRepository.stickyShift);
     await copy('reset_msg2', SettingsRepository.revealHintShown);
     return imported;
   }
+
+  static Object? _same(Object? value) => value;
 }

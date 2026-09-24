@@ -249,7 +249,8 @@ void main() {
       expect(result.tapes, 2);
       expect(await tapes.sourceOf('old', 'dic'), TapeSource.legacy);
       expect(await tapes.sourceOf('frogger', 'dic'), TapeSource.legacy);
-      expect(await settings.getInt(SettingsRepository.lastPage), 57);
+      // iACE 1.x page 57 is PDF page 56.
+      expect(await settings.getInt(SettingsRepository.lastPage), 56);
       expect(await settings.getBool(SettingsRepository.stickyShift), isTrue);
       expect(
         await settings.getBool(SettingsRepository.revealHintShown),
