@@ -16,6 +16,7 @@ import 'features/keyboard/keyboard_map.dart';
 import 'features/legacy/legacy_import.dart';
 import 'features/manual/manual_annotations.dart';
 import 'features/manual/manual_controller.dart';
+import 'features/settings/about.dart';
 import 'features/settings/settings_lid.dart';
 import 'features/settings/settings_repository.dart';
 import 'features/shell/home_page.dart';
@@ -23,6 +24,7 @@ import 'features/tapes/db_tape_library.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  registerLicenses();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -94,6 +96,7 @@ Future<void> main() async {
       manual: manual,
       annotations: annotations,
       settings: settings,
+      tapes: tapes,
       volume: volume,
       showRevealHint:
           await settings.getBool(SettingsRepository.revealHintShown) != true,
@@ -110,6 +113,7 @@ class IaceApp extends StatelessWidget {
     this.manual,
     this.annotations,
     this.settings,
+    this.tapes,
     this.volume,
     this.showRevealHint = false,
     this.drawersOpen = false,
@@ -124,6 +128,9 @@ class IaceApp extends StatelessWidget {
   final ManualAnnotations? annotations;
   final SettingsRepository? settings;
 
+  /// The tape browser is available when given.
+  final DbTapeLibrary? tapes;
+
   /// Created for [controller]'s machine if not given.
   final VolumeSetting? volume;
   final bool showRevealHint;
@@ -135,6 +142,7 @@ class IaceApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: controller),
         Provider<SettingsRepository?>.value(value: settings),
+        Provider<DbTapeLibrary?>.value(value: tapes),
         if (volume case final volume?)
           ChangeNotifierProvider.value(value: volume)
         else

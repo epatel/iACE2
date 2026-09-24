@@ -33,10 +33,15 @@ class ScreenView extends StatelessWidget {
                 height: width * AceMachine.height / AceMachine.width,
                 child: ValueListenableBuilder<ui.Image?>(
                   valueListenable: screen,
-                  builder: (context, image, _) => RawImage(
-                    image: image,
-                    fit: BoxFit.fill,
-                    filterQuality: FilterQuality.none,
+                  builder: (context, image, _) => Semantics(
+                    label: 'Jupiter ACE screen',
+                    value: _screenText(context),
+                    image: true,
+                    child: RawImage(
+                      image: image,
+                      fit: BoxFit.fill,
+                      filterQuality: FilterQuality.none,
+                    ),
                   ),
                 ),
               ),
@@ -46,6 +51,16 @@ class ScreenView extends StatelessWidget {
       ),
     );
   }
+
+  /// The screen's text for screen readers: the non-empty lines.
+  static String _screenText(BuildContext context) => context
+      .read<EmulatorController>()
+      .machine
+      .screenText()
+      .split('\n')
+      .map((line) => line.trimRight())
+      .where((line) => line.isNotEmpty)
+      .join('\n');
 
   /// The largest width, in logical pixels, that is a whole multiple of the
   /// ACE's 256 physical pixels, if that is at least 90% of [available].

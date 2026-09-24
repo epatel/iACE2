@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 
 import '../../core/db/app_database.dart';
 import '../../core/ffi/ace_machine.dart';
+import 'tap_format.dart';
 import 'tape_library.dart';
 
 /// Where a stored tape came from.
@@ -62,6 +63,22 @@ class DbTapeLibrary implements TapeLibrary {
   Future<List<TapeRow>> all() => (_db.select(
     _db.tapes,
   )..orderBy([(t) => OrderingTerm(expression: t.name)])).get();
+
+  /// Adds every file in a `.TAP`, replacing tapes with the same name and
+  /// kind. Returns the imported file names. Throws [FormatException] if the
+  /// data is not a `.TAP`.
+  Future<List<String>> importTap(Uint8List tap) async {
+    final files = TapFormat.parse(tap);
+    for (final file in files) {
+      await put(
+        file.name,
+        file.kind.extension,
+        Uint8List.fromList(file.data),
+        TapeSource.import,
+      );
+    }
+    return [for (final f in files) '${f.name}.${f.kind.extension}'];
+  }
 
   Future<void> delete(int id) =>
       (_db.delete(_db.tapes)..where((t) => t.id.equals(id))).go();

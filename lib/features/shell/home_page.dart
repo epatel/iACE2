@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: SafeArea(
         bottom: false,
         child: PortraitFrame(
-          child: ChangeNotifierProvider.value(
+          child: ChangeNotifierProvider<DrawerController?>.value(
             value: _drawers,
             child: LayoutBuilder(
               builder: (context, constraints) {

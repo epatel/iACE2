@@ -32,4 +32,4 @@ Every persisted format is versioned and has a tested upgrade path from every ear
 - Ignore `Caches/state.mem`. It holds a raw C struct, so it isn't portable.
 
 ## .TAP exchange
-A `.TAP` file is a sequence of blocks, each `[u16 len][len bytes]`, in header+data pairs. A header+data pair corresponds to one `tapes` row.
+A `.TAP` file is a sequence of blocks, each `[u16 len][len bytes]`, in header+data pairs. A header+data pair corresponds to one `tapes` row. The header is 26 bytes: a type byte (0 = dictionary, otherwise bytes), a 10-character space-padded name, parameters and a checksum. `TapFormat` (features/tapes) parses and builds `.TAP` files; `DbTapeLibrary.importTap` stores each file with `source=import`. The tape browser (settings lid → Tapes) exports one tape as `<name>.tap` through the share sheet and imports through the file picker. A stored tape is already a valid one-file `.TAP`.

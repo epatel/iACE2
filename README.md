@@ -8,7 +8,7 @@ The Jupiter ACE (1982) was the odd one out among the home micros of the 80s. It 
 
 ## Status
 
-Everything from iACE 1.x works on iOS and Android: the emulator, keyboard, sound, the manual with runnable examples, the drawer UI, and saved tapes and sessions. Next come the tape browser with `.TAP` import/export and release polish. [project-plan.md](project-plan.md) lists every phase and its state.
+Everything from iACE 1.x works on iOS and Android: the emulator, keyboard, sound, the manual with runnable examples, the drawer UI, and saved tapes and sessions. There is also a tape browser with `.TAP` import and export. What remains is store work: signing, screenshots and publishing the source (see [store/listing.md](store/listing.md)). [project-plan.md](project-plan.md) lists every phase and its state.
 
 | | |
 |---|---|
@@ -19,7 +19,9 @@ Everything from iACE 1.x works on iOS and Android: the emulator, keyboard, sound
 | ✅ | Beeper sound through miniaudio (CoreAudio / AAudio / OpenSL) |
 | ✅ | The user manual (PDF) with tappable "Enter" examples that type into the ACE, and links |
 | ✅ | The iACE drawer UI: screen and keyboard slide down over the manual, with settings under the keyboard's lid |
-| ⏳ | Tape browser with `.TAP` import/export, release polish |
+| ✅ | Tape browser: LOAD, delete, `.TAP` import/export (share sheet / file picker) |
+| ✅ | About dialog with licences, screen-reader text for the ACE screen, release builds |
+| ⏳ | Store release: signing, screenshots, public source URL (see `store/listing.md`) |
 
 ## Getting started
 
@@ -89,4 +91,4 @@ See [cards/persistence-migrations.md](cards/persistence-migrations.md).
 - The Jupiter ACE emulator this grew from: xAce by Edward Patel (1999), improved by [Lawrence Woodman](https://github.com/LawrenceWoodman/xAce).
 - The manual scan comes from [jupiter-ace.co.uk](http://www.jupiter-ace.co.uk). Frogger is by T. Skinner.
 
-The code is licensed under the **GNU General Public License v2 or later**, following the xz80 and xAce sources it builds on.
+The code is licensed under the **GNU General Public License v2 or later** (see [LICENSE](LICENSE)), following the xz80 and xAce sources it builds on. The app's About dialog lists every licence.

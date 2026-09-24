@@ -46,6 +46,9 @@ dependencies:
   xml: ^7.0.1
   pdfrx: ^2.6.5
   url_launcher: ^6.3.2
+  file_picker: ^13.1.0
+  share_plus: ^13.3.0
+  package_info_plus: ^10.2.1
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +81,7 @@ flutter:
     - assets/keyboard_map.json
     - assets/manual.pdf
     - assets/annotations.json
+    - LICENSE
 
   # To add assets to your application, add an assets section, like this:
   # assets:

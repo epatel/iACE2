@@ -1,10 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DrawerController;
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/ffi/ace_machine.dart';
 import '../emulator/emulator_controller.dart';
 import '../keyboard/keyboard_controller.dart';
+import '../shell/drawer_controller.dart';
+import '../tapes/db_tape_library.dart';
+import '../tapes/tape_browser.dart';
+import 'about.dart';
 import 'settings_repository.dart';
 
 /// The settings panel hidden under a piece of the keyboard's case, as in
@@ -178,6 +181,7 @@ class _SettingsPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final keyboard = context.watch<KeyboardController>();
     final volume = context.watch<VolumeSetting>();
+    final tapes = context.read<DbTapeLibrary?>();
     const text = TextStyle(color: Colors.white, fontSize: 13);
     return Material(
       color: const Color(0xFF2B2B2E),
@@ -225,22 +229,18 @@ class _SettingsPanel extends StatelessWidget {
                     ),
                     Expanded(
                       child: _PanelButton(
-                        'Info',
-                        () => launchUrl(
-                          Uri.parse('http://memention.com/iace'),
-                          mode: LaunchMode.externalApplication,
-                        ),
+                        'Tapes',
+                        tapes == null
+                            ? null
+                            : () => TapeBrowser.show(
+                                context,
+                                tapes: tapes,
+                                onLoad: context.read<DrawerController?>()?.open,
+                              ),
                       ),
                     ),
                     Expanded(
-                      flex: 2,
-                      child: _PanelButton(
-                        'jupiter-ace.com',
-                        () => launchUrl(
-                          Uri.parse('https://jupiter-ace.com'),
-                          mode: LaunchMode.externalApplication,
-                        ),
-                      ),
+                      child: _PanelButton('About', () => showAbout(context)),
                     ),
                   ],
                 ),
@@ -257,7 +257,7 @@ class _PanelButton extends StatelessWidget {
   const _PanelButton(this.label, this.onPressed);
 
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
