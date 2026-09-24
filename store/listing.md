@@ -40,11 +40,14 @@ jupiter ace,forth,emulator,retro,8-bit,z80,home computer,1982,programming
 Education (secondary: Developer Tools)
 
 ## Privacy
-No data is collected. The app has no network access of its own; it only opens links in the browser when you tap them.
+No data is collected. The app has no network access of its own; it only opens links in the browser when you tap them. Policy: https://github.com/epatel/iACE2/blob/main/PRIVACY.md
+
+Play Console data safety answers: no data collected, no data shared.
 
 ## Checklist before submitting
 - [ ] iOS: signing team `67Y4XH38L7`, bundle `com.memention.iACE`, version 2.0.0 (build > the 1.2 build)
-- [ ] Android: upload keystore and `signingConfig` for release (the template signs release builds with the debug key)
+- [ ] Android: create the upload key with `make keystore` (then `make build-android`) and back up the keystore and its password
+- [x] Privacy policy: https://github.com/epatel/iACE2/blob/main/PRIVACY.md
 - [ ] Screenshots: iPad 13" and 11", iPhone 6.9" and 6.1", Android 10" tablet and phone (portrait)
 - [ ] Note in the description that the manual view is tablet-only; phones link to the PDF
 - [x] Public source code URL (GPL): https://github.com/epatel/iACE2 (in the About dialog)

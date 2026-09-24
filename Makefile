@@ -8,6 +8,10 @@ VERSION_NAME := $(MAJOR).$(MINOR).$(PATCH)
 VERSION_CODE := $(BUILD)
 VERSION_FLAGS := --build-name=$(VERSION_NAME) --build-number=$(VERSION_CODE)
 
+# Google Play upload key (see tool/android_keystore.sh)
+KEYSTORE ?= $(HOME)/.android-keys/iace-upload.jks
+ANDROID_KEY_PROPERTIES := android/key.properties
+
 FLUTTER ?= flutter
 DART    ?= dart
 CC      ?= cc
@@ -29,7 +33,7 @@ C_FORMAT_FILES := $(wildcard $(NATIVE_SRC)/ace_core.c $(NATIVE_SRC)/ace_internal
 
 .DEFAULT_GOAL := help
 .PHONY: help setup gen ffigen drift core core-test core-test-ubsan test flutter-test integration-test analyze format \
-        run-ios run-android build-ios build-android version assets db-schema-dump db-migration-test clean
+        run-ios run-android build-ios build-android keystore version assets db-schema-dump db-migration-test clean
 
 help: ## List targets
 	@grep -hE '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*## "}{printf "  \033[36m%-18s\033[0m %s\n",$$1,$$2}'
@@ -90,8 +94,12 @@ run-android: ## Run on an Android tablet (device or emulator)
 build-ios: ## Build the iOS archive (.ipa), versioned from VERSION
 	$(FLUTTER) build ipa --release $(VERSION_FLAGS)
 
-build-android: ## Build the Android app bundle (.aab), versioned from VERSION
+build-android: ## Build the Android app bundle (.aab), versioned from VERSION, signed with the upload key
+	@test -f $(ANDROID_KEY_PROPERTIES) || { echo "No $(ANDROID_KEY_PROPERTIES): run 'make keystore' first (a Play upload needs the upload key)."; exit 1; }
 	$(FLUTTER) build appbundle --release $(VERSION_FLAGS)
+
+keystore: ## Create the Google Play upload key and android/key.properties (asks for a password)
+	@tool/android_keystore.sh $(KEYSTORE)
 
 version: ## Show the version from VERSION used for builds
 	@echo "$(VERSION_NAME) ($(VERSION_CODE))"
