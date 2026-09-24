@@ -1,6 +1,6 @@
 # iACE2
 
-Flutter rebuild of iACE, the Jupiter ACE emulator with its bundled user manual. It targets iOS and Android **tablets**, in **portrait only**. The Z80 emulation is C, called through `dart:ffi`. The original Objective-C app is https://github.com/epatel/iACE. A local copy may sit in `archive/iACE`, which is git-ignored and never committed; treat it as a read-only reference. The `tool/` converters read from it.
+Flutter rebuild of iACE, the Jupiter ACE emulator with its bundled user manual. It targets iOS and Android **tablets and phones**, in **portrait only**. Phones get `PhoneHome`, which has no manual. The Z80 emulation is C, called through `dart:ffi`. The original Objective-C app is https://github.com/epatel/iACE. A local copy may sit in `archive/iACE`, which is git-ignored and never committed; treat it as a read-only reference. The `tool/` converters read from it.
 
 The shared objective and phase list are in `project-plan.md`. Check which phase you are in before starting work, and update the plan when a phase finishes or a decision changes.
 

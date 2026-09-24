@@ -13,11 +13,15 @@ import '../manual/manual_controller.dart';
 import '../manual/manual_view.dart';
 import '../settings/settings_lid.dart';
 import 'drawer_controller.dart';
+import 'phone_home.dart';
 import 'portrait_frame.dart';
 
-/// The manual, with the screen and keyboard as drawers that slide down over
-/// it (iACE 1.x). Tap the manual to open the drawers, tap the screen to close
-/// them, or drag either drawer.
+/// On tablets: the manual, with the screen and keyboard as drawers that slide
+/// down over it (iACE 1.x). Tap the manual to open the drawers, tap the screen
+/// to close them, or drag either drawer.
+///
+/// On phones (shortest side under [phoneShortestSide]): [PhoneHome], the
+/// screen and keyboard without the manual.
 class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
@@ -35,6 +39,9 @@ class HomePage extends StatefulWidget {
   /// Start with the drawers open (iACE 1.x started closed).
   final bool drawersOpen;
   final bool showRevealHint;
+
+  /// Windows narrower than this on their shortest side get the phone layout.
+  static const phoneShortestSide = 600.0;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -92,6 +99,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.sizeOf(context).shortestSide < HomePage.phoneShortestSide) {
+      return PhoneHome(
+        keyboardMap: widget.keyboardMap,
+        showRevealHint: widget.showRevealHint,
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(

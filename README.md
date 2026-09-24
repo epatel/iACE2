@@ -1,6 +1,6 @@
 # iACE2
 
-A **Jupiter ACE** emulator for iPad and Android tablets, bundled with the original user manual. It is a Flutter rebuild of [iACE](https://github.com/epatel/iACE) (iOS, 2012), and the iOS build ships as version 2 of the same App Store app.
+A **Jupiter ACE** emulator for iPad, iPhone and Android tablets and phones. On tablets the original user manual is built in; on phones it opens online. It is a Flutter rebuild of [iACE](https://github.com/epatel/iACE) (iOS, 2012), and the iOS build ships as version 2 of the same App Store app.
 
 The Jupiter ACE (1982) was the odd one out among the home micros of the 80s. It ran **FORTH** instead of BASIC. Steven Vickers and Richard Altwasser designed it after working on the ZX81 and ZX Spectrum at Sinclair.
 

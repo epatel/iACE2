@@ -8,7 +8,7 @@
 - Hardware keyboard support is deferred past v1.
 
 ## Flutter implementation (`lib/features/keyboard/`)
-- `KeyboardMap` / `KeyDef` hold the parsed JSON. `AceKeyboard` draws the photo and places one `Listener` per key, so multi-touch works (hold SHIFT with one finger, tap a letter with another). Each key's touch area is enlarged by 8 photo px, half the gap between keys. Keys carry `Semantics` labels and the key `ValueKey('ace-key-<LABEL>')`, which tests use.
+- `KeyboardMap` / `KeyDef` hold the parsed JSON. `AceKeyboard` draws the photo and places one `Listener` per key, so multi-touch works (hold SHIFT with one finger, tap a letter with another). Each key's tap area (`KeyboardMap.hitRects`) grows on every side to halfway to its neighbour, so neighbouring areas touch. Towards the photo's edges it grows by 12 px. The pressed highlight still covers only the key itself. Keys carry `Semantics` labels and the key `ValueKey('ace-key-<LABEL>')`, which tests use.
 - Layout: the keyboard fills the available width. When height is short it crops the photo's top (the logo) first; if even the keys don't fit, it scales down and centres. Keys are never cut off.
 - `KeyboardController` handles press and release, multi-touch counts, sticky shift and spool cancelling.
 - **Minimum hold:** the ROM debounces and needs a key down for **3 frames** (60 ms), measured. A release that comes sooner is deferred until the key has been down for `minHoldFrames` = 4 emulator frames. It uses `EmulatorController.addFrameListener`. Without this, quick taps (and `adb shell input tap`) are lost.

@@ -1,11 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Tablets only (see project-plan.md §3) -->
-    <supports-screens
-        android:smallScreens="false"
-        android:normalScreens="false"
-        android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:requiresSmallestWidthDp="600" />
     <application
         android:label="iACE"
         android:name="${applicationName}"

@@ -34,6 +34,10 @@ void registerLicenses() {
 /// Where the source code is published (GPL).
 const sourceUrl = 'https://github.com/epatel/iACE2';
 
+/// The Jupiter ACE user manual (the PDF bundled with the app), for phones,
+/// which have no room for the manual view.
+const manualUrl = '$sourceUrl/blob/main/assets/manual.pdf';
+
 Future<void> showAbout(BuildContext context) async {
   final info = await PackageInfo.fromPlatform();
   if (!context.mounted) return;
@@ -52,6 +56,7 @@ Future<void> showAbout(BuildContext context) async {
       const SizedBox(height: 16),
       for (final (label, url) in [
         ('Source code on GitHub', sourceUrl),
+        ('User manual (PDF)', manualUrl),
         ('memention.com/iace', 'http://memention.com/iace'),
       ])
         TextButton(

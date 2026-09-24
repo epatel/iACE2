@@ -10,7 +10,7 @@ iACE: Jupiter ACE emulator
 ## Description
 The Jupiter ACE was the odd one out among the home computers of the early 80s. Instead of BASIC it ran FORTH. Two members of the team behind the ZX81 and ZX Spectrum designed it in 1982.
 
-iACE puts a Jupiter ACE and its complete original user manual on your tablet:
+iACE puts a Jupiter ACE on your tablet or phone, with its complete original user manual built in on tablets:
 
 • The manual is built in. Tap the Enter buttons next to the examples and they are typed into the computer for you.
 • A photo-real ACE keyboard, with SHIFT and SYMBOL SHIFT held just as on the real thing, or latched if you prefer.
@@ -45,6 +45,7 @@ No data is collected. The app has no network access of its own; it only opens li
 ## Checklist before submitting
 - [ ] iOS: signing team `67Y4XH38L7`, bundle `com.memention.iACE`, version 2.0.0 (build > the 1.2 build)
 - [ ] Android: upload keystore and `signingConfig` for release (the template signs release builds with the debug key)
-- [ ] Screenshots: iPad 13" and 11", Android 10" tablet (portrait)
+- [ ] Screenshots: iPad 13" and 11", iPhone 6.9" and 6.1", Android 10" tablet and phone (portrait)
+- [ ] Note in the description that the manual view is tablet-only; phones link to the PDF
 - [x] Public source code URL (GPL): https://github.com/epatel/iACE2 (in the About dialog)
 - [ ] Confirm the rights to distribute the ROM and the manual scan, and the "Jupiter ACE" naming with Andrews UK Ltd

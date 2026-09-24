@@ -47,11 +47,11 @@ class KeyDef {
 /// The on-screen keyboard: the photo and where each key is on it.
 /// Generated from the original iACE by `tool/extract_keyboard_map.py`.
 class KeyboardMap {
-  const KeyboardMap({
+  KeyboardMap({
     required this.image,
     required this.imageSize,
     required this.keys,
-  });
+  }) : hitRects = _hitRects(keys);
 
   factory KeyboardMap.fromJson(Map<String, dynamic> json) => KeyboardMap(
     image: json['image'] as String,
@@ -74,6 +74,51 @@ class KeyboardMap {
   final String image;
   final Size imageSize;
   final List<KeyDef> keys;
+
+  /// Where each key can be tapped, in photo pixels: the key grown on every side
+  /// to halfway to its neighbour, so neighbouring tap areas touch. Towards
+  /// the photo's edges it grows by [outerMargin].
+  final Map<KeyDef, Rect> hitRects;
+
+  static const outerMargin = 12.0;
+
+  static Map<KeyDef, Rect> _hitRects(List<KeyDef> keys) {
+    bool overlapsX(Rect a, Rect b) => a.left < b.right && b.left < a.right;
+    bool overlapsY(Rect a, Rect b) => a.top < b.bottom && b.top < a.bottom;
+
+    return {
+      for (final key in keys)
+        key: () {
+          final r = key.rect;
+          var left = r.left - outerMargin, right = r.right + outerMargin;
+          var top = r.top - outerMargin, bottom = r.bottom + outerMargin;
+          for (final other in keys) {
+            final o = other.rect;
+            if (identical(other, key)) continue;
+            if (overlapsY(r, o)) {
+              if (o.right <= r.left) {
+                left = [left, (o.right + r.left) / 2].reduce(_max);
+              }
+              if (o.left >= r.right) {
+                right = [right, (r.right + o.left) / 2].reduce(_min);
+              }
+            }
+            if (overlapsX(r, o)) {
+              if (o.bottom <= r.top) {
+                top = [top, (o.bottom + r.top) / 2].reduce(_max);
+              }
+              if (o.top >= r.bottom) {
+                bottom = [bottom, (r.bottom + o.top) / 2].reduce(_min);
+              }
+            }
+          }
+          return Rect.fromLTRB(left, top, right, bottom);
+        }(),
+    };
+  }
+
+  static double _max(double a, double b) => a > b ? a : b;
+  static double _min(double a, double b) => a < b ? a : b;
 
   /// The top of the highest key, in photo pixels. Everything above is the
   /// case with the logo, which may be cropped away when space is short.

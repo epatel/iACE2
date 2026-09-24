@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide DrawerController;
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/ffi/ace_machine.dart';
 import '../emulator/emulator_controller.dart';
@@ -86,7 +87,7 @@ class _SettingsLidState extends State<SettingsLid>
           top: rect.top * s,
           width: rect.width * s,
           height: rect.height * s,
-          child: const _SettingsPanel(),
+          child: const SettingsPanel(),
         ),
         Positioned(
           left: (rect.left + _lid.dx) * s,
@@ -152,8 +153,13 @@ class _SettingsLidState extends State<SettingsLid>
   }
 }
 
-class _SettingsPanel extends StatelessWidget {
-  const _SettingsPanel();
+/// Sticky shift, volume, reset, tapes and About. On tablets it lies under
+/// the keyboard's lid; on phones under the keyboard, where the manual is on
+/// tablets, and then it also links to the manual online ([showManualLink]).
+class SettingsPanel extends StatelessWidget {
+  const SettingsPanel({super.key, this.showManualLink = false});
+
+  final bool showManualLink;
 
   Future<void> _confirmReset(BuildContext context) async {
     final emulator = context.read<EmulatorController>();
@@ -175,6 +181,15 @@ class _SettingsPanel extends StatelessWidget {
       ),
     );
     if (reset == true) emulator.reset();
+  }
+
+  /// The tablet drawers, if any: opened after a tape is loaded.
+  static DrawerController? _drawers(BuildContext context) {
+    try {
+      return context.read<DrawerController?>();
+    } on ProviderNotFoundException {
+      return null;
+    }
   }
 
   @override
@@ -235,10 +250,20 @@ class _SettingsPanel extends StatelessWidget {
                             : () => TapeBrowser.show(
                                 context,
                                 tapes: tapes,
-                                onLoad: context.read<DrawerController?>()?.open,
+                                onLoad: _drawers(context)?.open,
                               ),
                       ),
                     ),
+                    if (showManualLink)
+                      Expanded(
+                        child: _PanelButton(
+                          'Manual',
+                          () => launchUrl(
+                            Uri.parse(manualUrl),
+                            mode: LaunchMode.externalApplication,
+                          ),
+                        ),
+                      ),
                     Expanded(
                       child: _PanelButton('About', () => showAbout(context)),
                     ),

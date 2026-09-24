@@ -14,10 +14,6 @@ class AceKeyboard extends StatelessWidget {
 
   final KeyboardMap map;
 
-  /// Extra touch area around each key, in photo pixels. Half the gap between
-  /// keys, so a touch between two keys goes to the nearest one.
-  static const touchSlop = 8.0;
-
   /// Photo pixels kept above the top row of keys.
   static const keysMargin = 16.0;
 
@@ -56,10 +52,14 @@ class AceKeyboard extends StatelessWidget {
                   for (final key in map.keys)
                     Positioned.fromRect(
                       rect: _scaled(
-                        key.rect.inflate(touchSlop),
+                        map.hitRects[key]!,
                         scale,
                       ).translate(0, -cropTop),
-                      child: _KeyButton(keyDef: key, scale: scale),
+                      child: _KeyButton(
+                        keyDef: key,
+                        hitRect: map.hitRects[key]!,
+                        scale: scale,
+                      ),
                     ),
                 ],
               ),
@@ -75,9 +75,16 @@ class AceKeyboard extends StatelessWidget {
 }
 
 class _KeyButton extends StatelessWidget {
-  const _KeyButton({required this.keyDef, required this.scale});
+  const _KeyButton({
+    required this.keyDef,
+    required this.hitRect,
+    required this.scale,
+  });
 
   final KeyDef keyDef;
+
+  /// The tap area (larger than the key), in photo pixels.
+  final Rect hitRect;
   final double scale;
 
   @override
@@ -96,8 +103,14 @@ class _KeyButton extends StatelessWidget {
         onPointerDown: (_) => keyboard.press(keyDef),
         onPointerUp: (_) => keyboard.release(keyDef),
         onPointerCancel: (_) => keyboard.release(keyDef),
+        // The pressed highlight covers the key itself, not its tap area.
         child: Padding(
-          padding: EdgeInsets.all(AceKeyboard.touchSlop * scale),
+          padding: EdgeInsets.fromLTRB(
+            (keyDef.rect.left - hitRect.left) * scale,
+            (keyDef.rect.top - hitRect.top) * scale,
+            (hitRect.right - keyDef.rect.right) * scale,
+            (hitRect.bottom - keyDef.rect.bottom) * scale,
+          ),
           child: AnimatedOpacity(
             opacity: down ? 1 : 0,
             duration: const Duration(milliseconds: 60),
