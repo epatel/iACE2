@@ -7,6 +7,10 @@ import 'manual_page.dart';
 
 /// The Jupiter ACE user manual: swipe between pages, jump with the slider,
 /// tap annotations to type examples, follow links and open web pages.
+///
+/// As in iACE 1.x, pages are as wide as the view and keep their size when the
+/// view gets shorter (the drawers cover it): a page scrolls vertically in
+/// whatever height is left. The slider floats over the bottom of the page.
 class ManualView extends StatefulWidget {
   const ManualView({
     super.key,
@@ -31,6 +35,13 @@ class _ManualViewState extends State<ManualView> {
   late final PageController _pages = PageController(
     initialPage: widget.controller.page - 1,
   );
+
+  /// Created once: pdfrx compares document refs by identity, so a new ref on
+  /// every build (e.g. while a drawer is dragged) reloads the whole PDF.
+  late final PdfDocumentRef _document = PdfDocumentRefAsset(widget.asset);
+
+  /// Room for the slider below the end of a page.
+  static const _sliderHeight = 56.0;
 
   @override
   void initState() {
@@ -63,8 +74,8 @@ class _ManualViewState extends State<ManualView> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
-      child: PdfDocumentViewBuilder.asset(
-        widget.asset,
+      child: PdfDocumentViewBuilder(
+        documentRef: _document,
         builder: (context, document) {
           if (document == null) {
             return const Center(child: CircularProgressIndicator());
@@ -75,14 +86,16 @@ class _ManualViewState extends State<ManualView> {
               (_) => widget.controller.pageCount = count,
             );
           }
-          return Column(
+          return Stack(
             children: [
-              Expanded(
-                child: PageView.builder(
-                  controller: _pages,
-                  itemCount: count,
-                  onPageChanged: (index) => widget.controller.goTo(index + 1),
-                  itemBuilder: (context, index) => ManualPage(
+              PageView.builder(
+                controller: _pages,
+                itemCount: count,
+                onPageChanged: (index) => widget.controller.goTo(index + 1),
+                itemBuilder: (context, index) => SingleChildScrollView(
+                  key: PageStorageKey('manual-page-${index + 1}'),
+                  padding: const EdgeInsets.only(bottom: _sliderHeight),
+                  child: ManualPage(
                     pageSize: widget.annotations.pageSize,
                     annotations: widget.annotations.onPage(index + 1),
                     content: PdfPageView(
@@ -93,7 +106,13 @@ class _ManualViewState extends State<ManualView> {
                   ),
                 ),
               ),
-              _PageSlider(controller: widget.controller),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: _sliderHeight,
+                child: _PageSlider(controller: widget.controller),
+              ),
             ],
           );
         },
@@ -113,8 +132,9 @@ class _PageSlider extends StatelessWidget {
       listenable: controller,
       builder: (context, _) {
         final count = controller.pageCount;
-        if (count < 2) return const SizedBox(height: 48);
-        return Padding(
+        if (count < 2) return const SizedBox.shrink();
+        return Container(
+          color: Colors.white.withValues(alpha: 0.85),
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
