@@ -25,6 +25,19 @@ for shot in sorted(SHOTS.glob("*.png")):
     if im.mode != "RGB":
         im.convert("RGB").save(shot, optimize=True)
 
+# Play's 7- and 10-inch tablet fields only take exactly 9:16. The tablet shots are 10:16
+# (1600 x 2560), so they are scaled to 1440 wide and letterboxed in black to 1440 x 2560,
+# rather than cropped (which would cut into the ACE screen).
+TABLET_9X16 = ROOT / "store/screenshots/tablet-9x16"
+TABLET_9X16.mkdir(exist_ok=True)
+for shot in sorted(SHOTS.glob("tablet-*.png")):
+    im = Image.open(shot).convert("RGB")
+    w = 1440
+    h = round(im.height * w / im.width)
+    framed = Image.new("RGB", (1440, 2560), "black")
+    framed.paste(im.resize((w, h), Image.LANCZOS), (0, (2560 - h) // 2))
+    framed.save(TABLET_9X16 / f"{shot.stem}-9x16.png", optimize=True)
+
 # Icon.
 icon = Image.open(ROOT / "assets/images/app_icon.png").convert("RGB")
 icon.resize((512, 512), Image.LANCZOS).save(OUT / "icon-512.png", optimize=True)

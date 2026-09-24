@@ -53,7 +53,7 @@ Made by `python3 tool/make_store_graphics.py`, from screenshots taken of the run
 | App icon (512×512) | `store/graphics/icon-512.png` |
 | Feature graphic (1024×500) | `store/graphics/feature-graphic.png` |
 | Phone screenshots | `store/screenshots/phone-1-forth.png`, `phone-2-frogger.png`, `phone-3-settings.png` |
-| 7-inch and 10-inch tablet screenshots | `store/screenshots/tablet-1-cover.png` … `tablet-5-settings.png` (1600×2560; the same set for both sizes) |
+| 7-inch and 10-inch tablet screenshots | `store/screenshots/tablet-9x16/*-9x16.png`: 1440×2560, letterboxed from the 1600×2560 shots, because Play only accepts exactly 9:16 for tablets. The same set goes in both fields. |
 
 ## Checklist before submitting
 - [ ] iOS: signing team `67Y4XH38L7`, bundle `com.memention.iACE`, version 2.0.0 (build > the 1.2 build)
