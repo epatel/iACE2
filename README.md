@@ -23,6 +23,17 @@ Everything from iACE 1.x works on iOS and Android: the emulator, keyboard, sound
 | ✅ | About dialog with licences, screen-reader text for the ACE screen, release builds |
 | ⏳ | Store release: signing, screenshots, public source URL (see `store/listing.md`) |
 
+## Help test iACE on Android
+
+iACE is in a closed beta on Google Play, and Google requires **12 testers for 14 days** before it can be published. If you have an Android phone or tablet (tablets preferred), you can help:
+
+1. Join the tester group, using the same Google account as on your device: https://groups.google.com/g/iace-closed-testers
+2. Become a tester: https://play.google.com/apps/testing/com.memention.iace
+3. Install iACE from Google Play: https://play.google.com/store/apps/details?id=com.memention.iace
+4. Keep it installed for at least 14 days, and open it now and then.
+
+Try `LOAD frogger`, then `VLIST`. Report problems or ideas in the group or under [Issues](https://github.com/epatel/iACE2/issues).
+
 ## Getting started
 
 Requirements: Flutter 3.47+ (Dart 3.13), Xcode for iOS, the Android SDK for Android, and a C compiler for the host tests (Xcode's clang works).
