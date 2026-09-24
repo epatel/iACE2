@@ -23,7 +23,7 @@ The screen and keyboard slide down over the manual like drawers. Tap the manual 
 
 iACE is free software under the GNU GPL: https://github.com/epatel/iACE2
 
-"Jupiter ACE" is a trademark of Andrews UK Ltd; see jupiter-ace.com.
+"Jupiter ACE" is a trademark of Andrews UK Ltd.
 
 ## What's new in 2.0
 iACE has been rebuilt from the ground up, and now runs on Android tablets as well as iPad:

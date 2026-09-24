@@ -26,7 +26,7 @@ void registerLicenses() {
       'The Jupiter ACE ROM (c) 1982 Jupiter Cantab. The Jupiter ACE User '
       "Manual (c) 1982 Steven Vickers; the scanned edition is from the Jupiter "
       'Ace Archive, www.jupiter-ace.co.uk. "Jupiter ACE" is a trademark of '
-      'Andrews UK Ltd, see jupiter-ace.com.',
+      'Andrews UK Ltd.',
     );
   });
 }
@@ -53,7 +53,6 @@ Future<void> showAbout(BuildContext context) async {
       for (final (label, url) in [
         ('Source code on GitHub', sourceUrl),
         ('memention.com/iace', 'http://memention.com/iace'),
-        ('jupiter-ace.com', 'https://jupiter-ace.com'),
       ])
         TextButton(
           onPressed: () =>

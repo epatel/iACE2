@@ -49,3 +49,6 @@ app.*.map.json
 
 # Native host build
 /build/native/
+
+# Local copy of the original iACE (https://github.com/epatel/iACE), used by tool/ converters
+/archive/

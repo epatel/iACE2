@@ -1,10 +1,10 @@
 # iACE2
 
-A **Jupiter ACE** emulator for iPad and Android tablets, bundled with the original user manual. It is a Flutter rebuild of [iACE](archive/iACE) (iOS, 2012), and the iOS build ships as version 2 of the same App Store app.
+A **Jupiter ACE** emulator for iPad and Android tablets, bundled with the original user manual. It is a Flutter rebuild of [iACE](https://github.com/epatel/iACE) (iOS, 2012), and the iOS build ships as version 2 of the same App Store app.
 
 The Jupiter ACE (1982) was the odd one out among the home micros of the 80s. It ran **FORTH** instead of BASIC. Steven Vickers and Richard Altwasser designed it after working on the ZX81 and ZX Spectrum at Sinclair.
 
-> The Jupiter ACE brand has been revived at <https://jupiter-ace.com>; "Jupiter ACE" is a trademark of Andrews UK Ltd.
+> "Jupiter ACE" is a trademark of Andrews UK Ltd.
 
 ## Status
 
@@ -70,7 +70,7 @@ flowchart TB
 - **`lib/core/ffi/`** holds the generated bindings and `AceMachine`, the only Dart class that touches FFI types.
 - **`lib/core/db/`** is the drift database. Every schema version is committed in `drift_schemas/` and checked by tests.
 - **`lib/features/`** is organised by feature: `emulator`, `keyboard`, `manual`, `tapes`, `settings`, `legacy`, `shell`.
-- **`tool/`** has the converters that extract assets from the original app in `archive/iACE`.
+- **`tool/`** has the converters that extracted the assets from the original app. To run them again (`make assets`), clone [epatel/iACE](https://github.com/epatel/iACE) into `archive/iACE`; that folder is not tracked.
 - **`cards/`** has short reference notes for each area (emulator internals, FFI, persistence, keyboard, manual). [CLAUDE.md](CLAUDE.md) says when to read which.
 
 ## Persistence and upgrades
