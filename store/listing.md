@@ -55,12 +55,21 @@ Made by `python3 tool/make_store_graphics.py`, from screenshots taken of the run
 | Phone screenshots | `store/screenshots/phone-1-forth.png`, `phone-2-frogger.png`, `phone-3-settings.png` |
 | 7-inch and 10-inch tablet screenshots | `store/screenshots/tablet-9x16/*-9x16.png`: 1440×2560, letterboxed from the 1600×2560 shots, because Play only accepts exactly 9:16 for tablets. The same set goes in both fields. |
 
+## Screenshots (App Store)
+
+Taken in `store/screenshots/appstore/` from the running app on the iOS simulators, with the status bar overridden to 9:41 (`xcrun simctl status_bar`). App Store Connect scales the largest sizes down for the smaller devices, so only these two sets are needed.
+
+| App Store Connect size | Simulator | Files |
+|---|---|---|
+| iPad 13" (2064×2752) | iPad Pro 13-inch (M4) | `ipad-1-cover.png` … `ipad-5-settings.png` |
+| iPhone 6.9" (1320×2868) | iPhone 16 Pro Max | `iphone-1-forth.png`, `iphone-2-frogger.png`, `iphone-3-settings.png` |
+
 ## Checklist before submitting
-- [ ] iOS: signing team `67Y4XH38L7`, bundle `com.memention.iACE`, version 2.0.0 (build > the 1.2 build)
+- [x] iOS: signing team `67Y4XH38L7`, bundle `com.memention.iACE`, version 2.0.0 (build > the 1.2 build)
 - [ ] Android: create the upload key with `make keystore` (then `make build-android`) and back up the keystore and its password
 - [x] Privacy policy: https://github.com/epatel/iACE2/blob/main/PRIVACY.md
 - [x] Screenshots for Android tablet and phone (portrait): `store/screenshots/`
-- [ ] Screenshots: iPad 13" and 11", iPhone 6.9" and 6.1" (App Store)
+- [x] Screenshots: iPad 13" and iPhone 6.9" (App Store): `store/screenshots/appstore/`
 - [ ] Note in the description that the manual view is tablet-only; phones link to the PDF
 - [x] Public source code URL (GPL): https://github.com/epatel/iACE2 (in the About dialog)
 - [x] ROM: Boldfield Computing (Paul Downham), who held the ACE rights after Jupiter Cantab, wrote in September 1998 that the ROM listing had been given away and that nobody would object to the emulator. The email is in [docs/legal/boldcomp.txt](../docs/legal/boldcomp.txt)
